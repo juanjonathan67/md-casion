@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Casion</string>
+    <string name="chat_textfield_hint">Ketik Disini</string>
+    <string name="privacy_policy_button">Saya telah membaca dan menyetujui <b>Kebijakan Privasi</b>.</string>
+    <string name="tv_go_signin">Sudah punya akun? <b>Masuk</b></string>
+    <string name="tv_go_signup">Belum punya akun? <b>Daftar</b></string>
+</resources>
