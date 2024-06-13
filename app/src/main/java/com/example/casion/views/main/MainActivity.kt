@@ -40,6 +40,8 @@ class MainActivity : AppCompatActivity() {
     private fun addDataToList() {
         mList.add(QuickChatData("Kepala", listOf("Pusing", "Migren", "Sakit Kepala")))
         mList.add(QuickChatData("Perut", listOf("Mual", "Kram", "Sakit Perut")))
+        mList.add(QuickChatData("Mata", listOf("Mata Merah", "Mata Kering", "Nyeri Mata")))
+        mList.add(QuickChatData("Lambung", listOf("Sakit Maag", "Perut Kembung")))
     }
 
     @RequiresApi(Build.VERSION_CODES.Q)
@@ -176,20 +178,6 @@ class MainActivity : AppCompatActivity() {
                 messageList.add(MessageData(response, RECEIVE_ID, timeStamp))
 
                 messageAdapter.insertMessage(MessageData(response, RECEIVE_ID, timeStamp))
-
-                binding.chatRecyclerView.scrollToPosition(messageAdapter.itemCount - 1)
-            }
-        }
-    }
-
-    private fun customBotMessage(message: String) {
-
-        lifecycleScope.launch {
-            delay(1000)
-            val timeStamp = Time.timeStamp()
-            withContext(Dispatchers.Main) {
-                messageList.add(MessageData(message, RECEIVE_ID, timeStamp))
-                messageAdapter.insertMessage(MessageData(message, RECEIVE_ID, timeStamp))
 
                 binding.chatRecyclerView.scrollToPosition(messageAdapter.itemCount - 1)
             }

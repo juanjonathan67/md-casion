@@ -14,7 +14,12 @@ object BotResponse {
             "sakit kepala" to listOf("tension headache", "migrain", "flu"),
             "mual" to listOf("gangguan pencernaan", "keracunan makanan", "gastritis"),
             "kram" to listOf("gastritis", "kolik", "dispepsia"),
-            "sakit perut" to listOf("gastritis", "kolik", "dispepsia")
+            "sakit perut" to listOf("gastritis", "kolik", "dispepsia"),
+            "mata merah" to listOf("konjungtivitis", "iritasi mata", "infeksi mata"),
+            "mata kering" to listOf("mata kering", "iritasi mata"),
+            "nyeri mata" to listOf("glaukoma", "iritasi mata"),
+            "sakit maag" to listOf("gastritis", "ulkus lambung"),
+            "perut kembung" to listOf("dispepsia", "gangguan pencernaan")
         )
 
         // Define penanganan awal untuk penyakit
@@ -29,7 +34,13 @@ object BotResponse {
             "keracunan makanan" to "Minum banyak air dan konsultasikan ke dokter.",
             "gastritis" to "Hindari makanan pedas dan minum obat antasida.",
             "kolik" to "Kompres hangat dan minum obat pereda nyeri.",
-            "dispepsia" to "Hindari makanan berlemak dan pedas."
+            "dispepsia" to "Hindari makanan berlemak dan pedas.",
+            "konjungtivitis" to "Jaga kebersihan mata dan hindari menyentuh mata.",
+            "iritasi mata" to "Hindari pemicu dan gunakan obat tetes mata.",
+            "infeksi mata" to "Konsultasikan dengan dokter untuk pengobatan yang sesuai.",
+            "mata kering" to "Gunakan obat tetes mata dan hindari lingkungan berdebu.",
+            "glaukoma" to "Konsultasikan dengan dokter untuk pengobatan yang sesuai.",
+            "ulkus lambung" to "Hindari makanan pedas dan asam, minum obat sesuai anjuran dokter."
         )
 
         return when {
@@ -42,7 +53,9 @@ object BotResponse {
             }
 
             message.contains("pusing") || message.contains("migren") || message.contains("sakit kepala") ||
-                    message.contains("mual") || message.contains("kram") || message.contains("sakit perut") -> {
+                    message.contains("mual") || message.contains("kram") || message.contains("sakit perut") ||
+                    message.contains("mata merah") || message.contains("mata kering") || message.contains("nyeri mata") ||
+                    message.contains("sakit maag") || message.contains("perut kembung") -> {
 
                 val symptoms = message.split(" ").filter { symptomDiseaseMap.containsKey(it) }
                 val possibleDiseases = symptoms.flatMap { symptomDiseaseMap[it] ?: emptyList() }.groupingBy { it }.eachCount()
