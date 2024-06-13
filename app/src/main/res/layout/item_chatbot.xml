@@ -32,7 +32,7 @@
                 android:textColor="@color/black"
                 android:textStyle="bold"
                 android:layout_marginBottom="8dp"
-                android:textSize="14sp" />
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/tv_bot_message"
@@ -41,7 +41,7 @@
                 android:text="Hai, tuan"
                 android:textColor="@color/black"
                 android:layout_marginBottom="8dp"
-                android:textSize="14sp" />
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/bot_timestamp"
@@ -50,7 +50,7 @@
                 android:text="12:00 AM"
                 android:textColor="@color/black"
                 android:layout_gravity="start"
-                android:textSize="12sp" />
+                android:textSize="14sp" />
 
         </LinearLayout>
 
@@ -60,8 +60,9 @@
         android:id="@+id/user_message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:visibility="invisible"
         android:layout_marginBottom="16dp"
-        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
         android:orientation="horizontal">
 
         <ImageView
@@ -86,7 +87,7 @@
                 android:textColor="@color/black"
                 android:textStyle="bold"
                 android:layout_marginBottom="8dp"
-                android:textSize="14sp" />
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/tv_user_message"
@@ -95,7 +96,7 @@
                 android:text="Hai, nona"
                 android:textColor="@color/black"
                 android:layout_marginBottom="8dp"
-                android:textSize="14sp" />
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/user_timestamp"
@@ -104,7 +105,7 @@
                 android:text="12:05 AM"
                 android:textColor="@color/black"
                 android:layout_gravity="start"
-                android:textSize="12sp" />
+                android:textSize="14sp" />
 
         </LinearLayout>
 

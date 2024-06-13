@@ -10,7 +10,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.casion.R
 import com.example.casion.data.QuickChatData
 
-class QuickChatAdapter(private var mList: List<QuickChatData>, private val contentTextSize: Float) : RecyclerView.Adapter<QuickChatAdapter.QuickChatViewHolder>() {
+class QuickChatAdapter(
+    private var mList: List<QuickChatData>,
+    private val contentTextSize: Float,
+    private val onItemClick: (String) -> Unit
+) : RecyclerView.Adapter<QuickChatAdapter.QuickChatViewHolder>() {
+
     inner class QuickChatViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
         val titleTv: TextView = itemView.findViewById(R.id.titleTv)
         val containerLinearLayout: LinearLayout = itemView.findViewById(R.id.containerLinearLayout)
@@ -48,12 +53,15 @@ class QuickChatAdapter(private var mList: List<QuickChatData>, private val conte
                 text = content
                 setPadding(8, 8, 8, 8)
                 textSize = contentTextSize
+                setOnClickListener {
+                    onItemClick(content)
+                }
             }
             contentLinearLayout.addView(textView)
             holder.containerLinearLayout.addView(contentLinearLayout)
         }
 
-        val isExpand : Boolean = quickChatData.isExpand
+        val isExpand: Boolean = quickChatData.isExpand
         holder.containerLinearLayout.visibility = if (isExpand) View.VISIBLE else View.GONE
 
         holder.constraintLayout.setOnClickListener {
@@ -79,7 +87,7 @@ class QuickChatAdapter(private var mList: List<QuickChatData>, private val conte
         position: Int,
         payloads: MutableList<Any>
     ) {
-        if(payloads.isNotEmpty() && payloads[0] == 0) {
+        if (payloads.isNotEmpty() && payloads[0] == 0) {
             holder.collapseExpandedView()
         } else {
             super.onBindViewHolder(holder, position, payloads)

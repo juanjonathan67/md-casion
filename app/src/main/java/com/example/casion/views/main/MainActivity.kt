@@ -40,9 +40,6 @@ class MainActivity : AppCompatActivity() {
     private fun addDataToList() {
         mList.add(QuickChatData("Kepala", listOf("Pusing", "Migren", "Sakit Kepala")))
         mList.add(QuickChatData("Perut", listOf("Mual", "Kram", "Sakit Perut")))
-        mList.add(QuickChatData("Tangan", listOf("Kebas", "Sakit Sendi", "Bengkak")))
-        mList.add(QuickChatData("Kaki", listOf("Bengkak", "Kram", "Lemah")))
-        mList.add(QuickChatData("Mata", listOf("Iritasi", "Penglihatan Kabur", "Mata Merah")))
     }
 
     @RequiresApi(Build.VERSION_CODES.Q)
@@ -56,7 +53,13 @@ class MainActivity : AppCompatActivity() {
         binding.recyclerView.setHasFixedSize(true)
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
         addDataToList()
-        quickChatAdapter = QuickChatAdapter(mList, contentTextSize = 16f)
+        quickChatAdapter = QuickChatAdapter(mList, contentTextSize = 16f) { selectedText ->
+            val currentText = binding.etMessage.text.toString()
+            binding.etMessage.setText(
+                if (currentText.isEmpty()) selectedText else "$currentText $selectedText,"
+            )
+            binding.etMessage.setSelection(binding.etMessage.text.length)
+        }
         binding.recyclerView.adapter = quickChatAdapter
         binding.recyclerView.visibility = View.GONE
 
@@ -143,12 +146,13 @@ class MainActivity : AppCompatActivity() {
         val timeStamp = Time.timeStamp()
 
         if (message.isNotEmpty()) {
-            //Adds it to our local list
             messageList.add(MessageData(message, SEND_ID, timeStamp))
             binding.etMessage.setText("")
 
             messageAdapter.insertMessage(MessageData(message, SEND_ID, timeStamp))
             binding.recyclerView.scrollToPosition(messageAdapter.itemCount - 1)
+
+            binding.imageView.visibility = View.GONE
 
             botResponse(message)
         }
@@ -161,16 +165,12 @@ class MainActivity : AppCompatActivity() {
             delay(1000)
 
             withContext(Dispatchers.Main) {
-                //Gets the response
                 val response = BotResponse.responses(message)
 
-                //Adds it to our local list
                 messageList.add(MessageData(response, RECEIVE_ID, timeStamp))
 
-                //Inserts our message into the adapter
                 messageAdapter.insertMessage(MessageData(response, RECEIVE_ID, timeStamp))
 
-                //Scrolls us to the position of the latest message
                 binding.recyclerView.scrollToPosition(messageAdapter.itemCount - 1)
             }
         }

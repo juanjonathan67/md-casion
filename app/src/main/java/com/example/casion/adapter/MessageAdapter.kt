@@ -15,14 +15,7 @@ class MessageAdapter: RecyclerView.Adapter<MessageAdapter.MessageViewHolder>() {
 
     var messageList = mutableListOf<MessageData>()
 
-    inner class MessageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        init {
-            itemView.setOnClickListener {
-                messageList.removeAt(adapterPosition)
-                notifyItemRemoved(adapterPosition)
-            }
-        }
-    }
+    inner class MessageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {}
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
