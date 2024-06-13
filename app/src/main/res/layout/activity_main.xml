@@ -111,6 +111,7 @@
             android:layout_margin="24dp"
             android:translationZ="1000dp"
             android:padding="16dp"
+            android:visibility="gone"
             android:background="@drawable/custom_quickchat"
             app:layout_constraintBottom_toTopOf="@+id/constraintLayout2"
             app:layout_constraintEnd_toEndOf="parent">

@@ -8,6 +8,7 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.GravityCompat
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.casion.R
 import com.example.casion.adapter.MessageAdapter
@@ -22,7 +23,6 @@ import com.example.casion.util.Time
 import com.example.casion.views.signup.SignUpActivity
 import com.google.android.material.button.MaterialButton
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -49,6 +49,8 @@ class MainActivity : AppCompatActivity() {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        binding.quickchat.visibility = View.GONE
 
         binding.recyclerView.setHasFixedSize(true)
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
@@ -114,8 +116,10 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.etMessage.setOnClickListener {
-            GlobalScope.launch {
+            lifecycleScope.launch {
                 delay(100)
+
+                binding.quickchat.visibility = View.VISIBLE
 
                 withContext(Dispatchers.Main) {
                     binding.chatRecyclerView.scrollToPosition(messageAdapter.itemCount - 1)
@@ -133,7 +137,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        GlobalScope.launch {
+        lifecycleScope.launch {
             delay(100)
             withContext(Dispatchers.Main) {
                 binding.chatRecyclerView.scrollToPosition(messageAdapter.itemCount - 1)
@@ -150,42 +154,44 @@ class MainActivity : AppCompatActivity() {
             binding.etMessage.setText("")
 
             messageAdapter.insertMessage(MessageData(message, SEND_ID, timeStamp))
-            binding.recyclerView.scrollToPosition(messageAdapter.itemCount - 1)
+            binding.chatRecyclerView.scrollToPosition(messageAdapter.itemCount - 1)
 
             binding.imageView.visibility = View.GONE
 
             botResponse(message)
+
+            binding.quickchat.visibility = View.GONE
         }
     }
 
     private fun botResponse(message: String) {
         val timeStamp = Time.timeStamp()
 
-        GlobalScope.launch {
+        lifecycleScope.launch {
             delay(1000)
 
-            withContext(Dispatchers.Main) {
-                val response = BotResponse.responses(message)
+            val response = BotResponse.responses(message)
 
+            withContext(Dispatchers.Main) {
                 messageList.add(MessageData(response, RECEIVE_ID, timeStamp))
 
                 messageAdapter.insertMessage(MessageData(response, RECEIVE_ID, timeStamp))
 
-                binding.recyclerView.scrollToPosition(messageAdapter.itemCount - 1)
+                binding.chatRecyclerView.scrollToPosition(messageAdapter.itemCount - 1)
             }
         }
     }
 
     private fun customBotMessage(message: String) {
 
-        GlobalScope.launch {
+        lifecycleScope.launch {
             delay(1000)
+            val timeStamp = Time.timeStamp()
             withContext(Dispatchers.Main) {
-                val timeStamp = Time.timeStamp()
                 messageList.add(MessageData(message, RECEIVE_ID, timeStamp))
                 messageAdapter.insertMessage(MessageData(message, RECEIVE_ID, timeStamp))
 
-                binding.recyclerView.scrollToPosition(messageAdapter.itemCount - 1)
+                binding.chatRecyclerView.scrollToPosition(messageAdapter.itemCount - 1)
             }
         }
     }
