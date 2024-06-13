@@ -51,4 +51,17 @@ dependencies {
 
     //splashscreen
     implementation("androidx.core:core-splashscreen:1.2.0-alpha01")
+
+    //recyclerView
+    implementation ("androidx.recyclerview:recyclerview:1.1.0")
+
+    //coroutines
+    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.9")
+    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.9")
+
+    //lifecycle components
+    implementation ("androidx.lifecycle:lifecycle-livedata-ktx:2.2.0")
+    implementation ("androidx.lifecycle:lifecycle-extensions:2.2.0")
+    implementation ("androidx.lifecycle:lifecycle-common-java8:2.2.0")
+    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0")
 }

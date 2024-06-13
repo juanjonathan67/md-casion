@@ -10,20 +10,33 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.GravityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.casion.R
+import com.example.casion.adapter.MessageAdapter
 import com.example.casion.adapter.QuickChatAdapter
+import com.example.casion.data.MessageData
 import com.example.casion.data.QuickChatData
 import com.example.casion.databinding.ActivityMainBinding
+import com.example.casion.util.BotResponse
+import com.example.casion.util.Constant.RECEIVE_ID
+import com.example.casion.util.Constant.SEND_ID
+import com.example.casion.util.Time
 import com.example.casion.views.signup.SignUpActivity
 import com.google.android.material.button.MaterialButton
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private var mList = ArrayList<QuickChatData>()
-    private lateinit var adapter: QuickChatAdapter
+    private lateinit var quickChatAdapter: QuickChatAdapter
     private var isRecyclerViewVisible = false
+    private lateinit var messageAdapter: MessageAdapter
+    var messageList = mutableListOf<MessageData>()
 
-    //QuickChat Data
+    //QuickChat Dummy Data
     private fun addDataToList() {
         mList.add(QuickChatData("Kepala", listOf("Pusing", "Migren", "Sakit Kepala")))
         mList.add(QuickChatData("Perut", listOf("Mual", "Kram", "Sakit Perut")))
@@ -43,8 +56,8 @@ class MainActivity : AppCompatActivity() {
         binding.recyclerView.setHasFixedSize(true)
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
         addDataToList()
-        adapter = QuickChatAdapter(mList, contentTextSize = 16f)
-        binding.recyclerView.adapter = adapter
+        quickChatAdapter = QuickChatAdapter(mList, contentTextSize = 16f)
+        binding.recyclerView.adapter = quickChatAdapter
         binding.recyclerView.visibility = View.GONE
 
         val drawerButton = binding.drawerButton
@@ -75,6 +88,10 @@ class MainActivity : AppCompatActivity() {
         binding.quickChatTitle.setOnClickListener {
             toggleRecyclerViewVisibility()
         }
+
+        recyclerView()
+
+        clickEvents()
     }
 
     private fun toggleRecyclerViewVisibility() {
@@ -84,6 +101,92 @@ class MainActivity : AppCompatActivity() {
         } else {
             binding.recyclerView.visibility = View.GONE
             isRecyclerViewVisible = false
+        }
+    }
+
+    private fun clickEvents() {
+
+        binding.sendButton.setOnClickListener {
+            sendMessage()
+        }
+
+        binding.etMessage.setOnClickListener {
+            GlobalScope.launch {
+                delay(100)
+
+                withContext(Dispatchers.Main) {
+                    binding.chatRecyclerView.scrollToPosition(messageAdapter.itemCount - 1)
+
+                }
+            }
+        }
+    }
+
+    private fun recyclerView() {
+        messageAdapter = MessageAdapter()
+        binding.chatRecyclerView.adapter = messageAdapter
+        binding.chatRecyclerView.layoutManager = LinearLayoutManager(applicationContext)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        GlobalScope.launch {
+            delay(100)
+            withContext(Dispatchers.Main) {
+                binding.chatRecyclerView.scrollToPosition(messageAdapter.itemCount - 1)
+            }
+        }
+    }
+
+    private fun sendMessage() {
+        val message = binding.etMessage.text.toString()
+        val timeStamp = Time.timeStamp()
+
+        if (message.isNotEmpty()) {
+            //Adds it to our local list
+            messageList.add(MessageData(message, SEND_ID, timeStamp))
+            binding.etMessage.setText("")
+
+            messageAdapter.insertMessage(MessageData(message, SEND_ID, timeStamp))
+            binding.recyclerView.scrollToPosition(messageAdapter.itemCount - 1)
+
+            botResponse(message)
+        }
+    }
+
+    private fun botResponse(message: String) {
+        val timeStamp = Time.timeStamp()
+
+        GlobalScope.launch {
+            delay(1000)
+
+            withContext(Dispatchers.Main) {
+                //Gets the response
+                val response = BotResponse.responses(message)
+
+                //Adds it to our local list
+                messageList.add(MessageData(response, RECEIVE_ID, timeStamp))
+
+                //Inserts our message into the adapter
+                messageAdapter.insertMessage(MessageData(response, RECEIVE_ID, timeStamp))
+
+                //Scrolls us to the position of the latest message
+                binding.recyclerView.scrollToPosition(messageAdapter.itemCount - 1)
+            }
+        }
+    }
+
+    private fun customBotMessage(message: String) {
+
+        GlobalScope.launch {
+            delay(1000)
+            withContext(Dispatchers.Main) {
+                val timeStamp = Time.timeStamp()
+                messageList.add(MessageData(message, RECEIVE_ID, timeStamp))
+                messageAdapter.insertMessage(MessageData(message, RECEIVE_ID, timeStamp))
+
+                binding.recyclerView.scrollToPosition(messageAdapter.itemCount - 1)
+            }
         }
     }
 }
