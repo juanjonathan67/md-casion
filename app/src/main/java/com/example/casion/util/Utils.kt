@@ -6,6 +6,9 @@ import android.widget.Toast
 import com.example.casion.data.remote.response.ErrorResponse
 import com.google.gson.Gson
 import retrofit2.HttpException
+import java.time.Instant
+import java.time.LocalDate
+import java.time.ZoneId
 import java.util.regex.Pattern
 
 private val PASSWORD = Pattern.compile("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#\$%^&+=;'])(?=\\\\S+\$).{8,}\$")
@@ -15,7 +18,7 @@ fun showToast(context: Context, message: String) {
 }
 
 fun parseError(e: HttpException) : String {
-    val errorBody = e.response()?.errorBody()?.string()
+    val errorBody = e.response()?.errorBody()?.toString()
     val errorResponse = Gson().fromJson(errorBody, ErrorResponse::class.java)
     return errorResponse.message
 }

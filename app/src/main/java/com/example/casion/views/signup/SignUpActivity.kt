@@ -17,6 +17,7 @@ import androidx.core.widget.doOnTextChanged
 import com.example.casion.R
 import com.example.casion.data.result.Result
 import com.example.casion.databinding.ActivitySignUpBinding
+import com.example.casion.util.Time.localDateFromTimestamp
 import com.example.casion.util.UserPreferences
 import com.example.casion.util.ViewModelFactory
 import com.example.casion.util.datastore
@@ -30,12 +31,14 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
+import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.runBlocking
 import java.lang.Exception
+import java.time.LocalDate
 
 class SignUpActivity : AppCompatActivity() {
     private val authViewModel by viewModels<AuthViewModel> { ViewModelFactory.getAuthInstance(this) }
@@ -48,7 +51,12 @@ class SignUpActivity : AppCompatActivity() {
 
     private lateinit var prefs: UserPreferences
 
-    private var male = true
+    private var birthday = LocalDate.now().toString()
+
+    private var datePicker = MaterialDatePicker.Builder.datePicker()
+        .setTitleText("Tanggal Lahir")
+        .setSelection(MaterialDatePicker.todayInUtcMilliseconds())
+        .build()
 
     private var resultLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
@@ -164,12 +172,21 @@ class SignUpActivity : AppCompatActivity() {
             }
         }
 
+        datePicker.addOnPositiveButtonClickListener {
+            birthday = localDateFromTimestamp(it).toString()
+            binding.birthday.text = birthday
+        }
+
+        binding.birthday.setOnClickListener {
+            datePicker.show(supportFragmentManager, "Tanggal Lahir")
+        }
+
         binding.SignUpbutton.setOnClickListener {
             if (binding.radioButton.isChecked) {
                 authViewModel.register(
                     binding.fullname.text.toString(),
                     binding.email.text.toString(),
-                    binding.age.text.toString(),
+                    birthday,
                     binding.male.isChecked,
                     binding.pass.text.toString(),
                 ).observe(this) { result ->

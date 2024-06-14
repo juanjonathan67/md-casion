@@ -4,6 +4,7 @@ import com.example.casion.data.remote.request.ChatRequest
 import com.example.casion.data.remote.response.ChatResponse
 import com.example.casion.data.remote.response.ErrorResponse
 import com.example.casion.data.remote.response.StoreChatResponse
+import com.example.casion.data.remote.response.UserDetailsResponse
 import com.example.casion.data.remote.retrofit.DatabaseApiService
 import com.example.casion.data.result.Result
 import com.example.casion.util.parseError
@@ -14,6 +15,21 @@ import retrofit2.HttpException
 class DatabaseRepository private constructor(
     private val databaseApiService: DatabaseApiService
 ){
+    suspend fun getUserDetails() : Result<UserDetailsResponse> {
+        return withContext(Dispatchers.IO) {
+            try {
+                val userDetailsResponse = databaseApiService.getUserDetails()
+                if (userDetailsResponse.success) {
+                    return@withContext Result.Success(userDetailsResponse)
+                } else {
+                    return@withContext Result.Error(userDetailsResponse.message)
+                }
+            } catch (e : HttpException) {
+                return@withContext Result.Error(parseError(e))
+            }
+        }
+    }
+
     suspend fun getChat() : Result<ChatResponse> {
         return withContext(Dispatchers.IO) {
             try {

@@ -12,7 +12,7 @@ interface AuthApiService {
     suspend fun register(
         @Field("full_name") fullName: String,
         @Field("email") email: String,
-        @Field("age") age: String,
+        @Field("birthday") birthday: String,
         @Field("gender") gender: Boolean,
         @Field("password") password: String,
     ) : LoginResponse

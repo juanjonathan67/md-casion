@@ -8,18 +8,20 @@ import com.example.casion.data.repository.DatabaseRepository
 import com.example.casion.data.repository.PredictRepository
 import com.example.casion.di.Injection
 import com.example.casion.viewmodel.AuthViewModel
+import com.example.casion.viewmodel.DatabaseViewModel
+import com.example.casion.viewmodel.PredictViewModel
 
 class ViewModelFactory private constructor(
-    private val chatRepository: PredictRepository? = null,
+    private val predictRepository: PredictRepository? = null,
     private val authRepository: AuthRepository? = null,
     private val databaseRepository: DatabaseRepository? = null
 ) : ViewModelProvider.NewInstanceFactory() {
 
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T = when (modelClass) {
-//        ChatViewModel::class.java -> ChatViewModel(chatRepository)
+        PredictViewModel::class.java -> PredictViewModel(predictRepository)
         AuthViewModel::class.java -> AuthViewModel(authRepository)
-//        DatabaseViewModel::class.java -> DatabaseViewModel(databaseRepository)
+        DatabaseViewModel::class.java -> DatabaseViewModel(databaseRepository)
         else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
     } as T
 
@@ -33,9 +35,9 @@ class ViewModelFactory private constructor(
         @Volatile
         private var databaseInstance: ViewModelFactory? = null
 
-        fun getChatInstance(context: Context): ViewModelFactory =
+        fun getPredictInstance(context: Context): ViewModelFactory =
             chatInstance ?: synchronized(this) {
-                chatInstance ?: ViewModelFactory(chatRepository = Injection.providePredictRepository(context))
+                chatInstance ?: ViewModelFactory(predictRepository = Injection.providePredictRepository(context))
             }.also { chatInstance = it }
 
         fun getAuthInstance(context: Context): ViewModelFactory =

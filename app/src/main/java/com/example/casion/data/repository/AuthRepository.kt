@@ -16,13 +16,13 @@ class AuthRepository private constructor(
     suspend fun register(
         fullName: String,
         email: String,
-        age: String,
+        birthday: String,
         gender: Boolean,
         password: String,
     ) : Result<LoginResponse> {
         return withContext(Dispatchers.IO) {
             try {
-                val registerResponse = authApiService.register(fullName, email, age, gender, password)
+                val registerResponse = authApiService.register(fullName, email, birthday, gender, password)
                 if (registerResponse.success) {
                     prefs.saveUserToken(registerResponse.token)
                     return@withContext Result.Success(registerResponse)

@@ -87,31 +87,50 @@
                 android:hint="Email*"
                 android:imeOptions="actionNext"
                 android:inputType="textEmailAddress"
-                android:nextFocusDown="@id/age"
+                android:nextFocusDown="@id/birthday"
                 android:paddingHorizontal="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/fullname" />
 
             <EditText
-                android:id="@+id/age"
+                android:id="@+id/pass"
                 android:layout_width="0dp"
                 android:layout_height="48dp"
                 android:layout_marginHorizontal="32dp"
                 android:layout_marginTop="16dp"
                 android:background="@drawable/custom_textfield"
                 android:ems="10"
-                android:hint="Umur*"
-                android:imeOptions="actionNext"
-                android:inputType="number"
-                android:nextFocusDown="@id/radioGroup"
-                android:paddingStart="16dp"
+                android:hint="Password"
+                android:drawablePadding="8dp"
+                android:imeOptions="actionDone"
+                android:inputType="textPassword"
+                android:paddingHorizontal="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/email" />
 
+            <TextView
+                android:id="@+id/birthday"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_marginHorizontal="32dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/custom_textfield"
+                android:ems="10"
+                android:text="Tanggal Lahir*"
+                android:nextFocusDown="@id/pass"
+                android:paddingStart="16dp"
+                android:clickable="true"
+                android:textSize="18sp"
+                android:gravity="center_vertical"
+                android:textColor="?android:textColorHint"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/pass" />
+
             <RadioGroup
-                android:id="@+id/radioGroup"
+                android:id="@+id/rgGender"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="32dp"
@@ -119,7 +138,7 @@
                 android:orientation="horizontal"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/age">
+                app:layout_constraintTop_toBottomOf="@id/birthday">
 
                 <RadioButton
                     android:id="@+id/male"
@@ -137,23 +156,6 @@
 
             </RadioGroup>
 
-            <EditText
-                android:id="@+id/pass"
-                android:layout_width="0dp"
-                android:layout_height="48dp"
-                android:layout_marginHorizontal="32dp"
-                android:layout_marginTop="16dp"
-                android:background="@drawable/custom_textfield"
-                android:ems="10"
-                android:hint="Password"
-                android:drawablePadding="8dp"
-                android:imeOptions="actionDone"
-                android:inputType="textPassword"
-                android:paddingHorizontal="16dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
-
             <RadioButton
                 android:id="@+id/radioButton"
                 android:layout_width="match_parent"
@@ -166,7 +168,7 @@
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/pass" />
+                app:layout_constraintTop_toBottomOf="@+id/rgGender" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/SignUpbutton"

@@ -14,13 +14,13 @@ class AuthViewModel (private val authRepository: AuthRepository?) : ViewModel() 
     fun register(
         fullName: String,
         email: String,
-        age: String,
+        birthday: String,
         gender: Boolean,
         password: String,
     ) : LiveData<Result<LoginResponse>> {
         val result: MutableLiveData<Result<LoginResponse>> = MutableLiveData(Result.Loading)
         viewModelScope.launch {
-            result.value = authRepository?.register(fullName, email, age, gender, password)
+            result.value = authRepository?.register(fullName, email, birthday, gender, password)
         }
         return result
     }

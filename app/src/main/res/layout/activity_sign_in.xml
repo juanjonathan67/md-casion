@@ -71,7 +71,7 @@
                 android:hint="Email*"
                 android:imeOptions="actionNext"
                 android:inputType="text"
-                android:nextFocusDown="@id/age"
+                android:nextFocusDown="@id/pass"
                 android:paddingStart="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
