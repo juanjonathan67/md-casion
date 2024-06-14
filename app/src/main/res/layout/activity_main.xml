@@ -90,8 +90,8 @@
 
             <ImageButton
                 android:id="@+id/drawerButton"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:adjustViewBounds="true"
                 android:background="@color/neutral_10"
                 android:padding="4dp"

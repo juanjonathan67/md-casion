@@ -20,6 +20,7 @@ import com.example.casion.util.BotResponse
 import com.example.casion.util.Constant.RECEIVE_ID
 import com.example.casion.util.Constant.SEND_ID
 import com.example.casion.util.Time
+import com.example.casion.views.form.diabetes.DiabetesActivity
 import com.example.casion.views.signup.SignUpActivity
 import com.google.android.material.button.MaterialButton
 import kotlinx.coroutines.Dispatchers
@@ -83,7 +84,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         signUpButton.setOnClickListener {
-            val intent = Intent(this, SignUpActivity::class.java)
+            val intent = Intent(this, DiabetesActivity::class.java)
             startActivity(intent)
         }
 
