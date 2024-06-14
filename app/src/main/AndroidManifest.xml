@@ -26,7 +26,7 @@
         <activity
             android:name=".views.main.MainActivity"
             android:exported="true"
-            android:windowSoftInputMode="adjustResize" >
+            android:theme="@style/Theme.Casion" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
