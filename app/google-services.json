@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "248214565098",
+    "project_id": "casion-capstone",
+    "storage_bucket": "casion-capstone.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:248214565098:android:59a19f4565fdfb7ea5a793",
+        "android_client_info": {
+          "package_name": "com.example.casion"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "248214565098-auferht8rlj8peb71porr941jbp8rpds.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.casion",
+            "certificate_hash": "0724e367700e275047df2592db10e9ead3b5c603"
+          }
+        },
+        {
+          "client_id": "248214565098-7qh3d4aatdndssae44k4ifskfds6fqtf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBZXSECqvbzw1OPt9a4kR_5VUVc3NZtIfY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "248214565098-7qh3d4aatdndssae44k4ifskfds6fqtf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
