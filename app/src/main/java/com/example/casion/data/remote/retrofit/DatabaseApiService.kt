@@ -9,6 +9,7 @@ import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.PUT
 import retrofit2.http.Path
 
 interface DatabaseApiService {
@@ -20,6 +21,9 @@ interface DatabaseApiService {
 
     @POST("chat/")
     suspend fun storeChat(@Body chatRequest: ChatRequest) : StoreChatResponse
+
+    @PUT("chat/{chatId}")
+    suspend fun updateChat(@Path("chatId") chatId: String, @Body chatRequest: ChatRequest) : ErrorResponse
 
     @DELETE("chat/{chatId}")
     suspend fun deleteChat(@Path("chatId") chatId: String) : ErrorResponse

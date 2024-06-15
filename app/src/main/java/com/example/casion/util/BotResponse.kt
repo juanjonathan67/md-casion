@@ -11,7 +11,7 @@ object BotResponse {
         "swollen_legs" to "Kaki Bengkak",
         "puffy_face_and_eyes" to "Wajah dan Mata Bengkak",
         "brittle_nails" to "Kuku Rapuh",
-        "swollen_extremeties" to "Ekstremitas Bengkak",
+        "swollen_extremities" to "Ekstremitas Bengkak",
         "dischromic_patches" to "Bercak Diskromik",
         "pus_filled_pimples" to "Jerawat Bernanah",
         "blackheads" to "Komedo",
@@ -85,27 +85,13 @@ object BotResponse {
         "high_fever" to "Demam Tinggi",
         "mild_fever" to "Demam Ringan",
         "headache" to "Sakit Kepala",
-        "dizziness" to "Pusing",
-        "cramps" to "Kram",
         "obesity" to "Kegemukan",
-        "fluid_overload" to "Overload Cairan",
         "malaise" to "Lesu",
-        "weakness_in_limbs" to "Kelemahan di Anggota Tubuh",
         "fast_heart_rate" to "Detak Jantung Cepat",
-        "painful_walking" to "Nyeri Saat Berjalan",
-        "weakness_of_one_body_side" to "Kelemahan di Satu Sisi Tubuh",
-        "loss_of_balance" to "Kehilangan Keseimbangan",
-        "unsteadiness" to "Ketidakstabilan",
-        "spinning_movements" to "Gerakan Berputar",
-        "loss_of_smell" to "Kehilangan Indra Penciuman",
-        "bladder_discomfort" to "Ketidaknyamanan Kandung Kemih",
-        "foul_smell_of_urine" to "Bau Urin Busuk",
-        "continuous_feel_of_urine" to "Terus Merasa Ingin Buang Air Kecil",
         "toxic_look_(typhos)" to "Penampilan Toksik (Tifoid)",
         "depression" to "Depresi",
         "irritability" to "Iritabilitas",
         "muscle_pain" to "Nyeri Otot",
-        "altered_sensorium" to "Sensorium Terganggu",
         "red_spots_over_body" to "Bintik Merah di Seluruh Tubuh",
         "blurred_and_distorted_vision" to "Penglihatan Kabur dan Terganggu",
         "visual_disturbances" to "Gangguan Penglihatan",
@@ -118,54 +104,21 @@ object BotResponse {
 
     val neurologicalSymptoms = hashMapOf(
         "muscle_wasting" to "Penyusutan Otot",
-        "weakness_in_limbs" to "Kelemahan di Anggota Tubuh",
-        "dizziness" to "Pusing",
-        "cramps" to "Kram",
-        "altered_sensorium" to "Sensorium Terganggu",
-        "blurred_and_distorted_vision" to "Penglihatan Kabur dan Terganggu",
-        "visual_disturbances" to "Gangguan Penglihatan",
-        "lack_of_concentration" to "Kurang Konsentrasi",
-        "slurred_speech" to "Ucapan Tidak Jelas",
-        "spinning_movements" to "Gerakan Berputar",
-        "loss_of_balance" to "Kehilangan Keseimbangan",
-        "unsteadiness" to "Ketidakstabilan",
-        "weakness_of_one_body_side" to "Kelemahan di Satu Sisi Tubuh"
+        "slurred_speech" to "Ucapan Tidak Jelas"
     )
 
     val urinarySymptoms = hashMapOf(
         "burning_micturition" to "Buang Air Kecil Terbakar",
-        "spotting_urination" to "Bercak Urin",
-        "yellow_urine" to "Urin Kuning",
-        "foul_smell_of_urine" to "Bau Urin Busuk",
-        "continuous_feel_of_urine" to "Terus Merasa Ingin Buang Air Kecil",
-        "bladder_discomfort" to "Ketidaknyamanan Kandung Kemih",
-        "polyuria" to "Poliuria",
-        "pain_during_bowel_movements" to "Nyeri Saat Buang Air Besar",
-        "pain_in_anal_region" to "Nyeri di Daerah Anus",
-        "bloody_stool" to "Tinja Berdarah",
-        "irritation_in_anus" to "Iritasi di Anus"
+        "spotting_urination" to "Bercak Urin"
     )
 
     val cardiovascularSymptoms = hashMapOf(
-        "chest_pain" to "Nyeri Dada",
-        "fast_heart_rate" to "Detak Jantung Cepat",
-        "palpitations" to "Palpitasi",
-        "prominent_veins_on_calf" to "Pembuluh Darah Menonjol di Betis",
-        "painful_walking" to "Nyeri Saat Berjalan",
-        "cold_hands_and_feets" to "Tangan dan Kaki Dingin"
+        "prominent_veins_on_calf" to "Pembuluh Darah Menonjol di Betis"
     )
 
     val endocrineSymptoms = hashMapOf(
-        "weight_gain" to "Penambahan Berat Badan",
-        "weight_loss" to "Penurunan Berat Badan",
-        "irregular_sugar_level" to "Kadar Gula Tidak Teratur",
         "enlarged_thyroid" to "Tiroid Membesar",
-        "brittle_nails" to "Kuku Rapuh",
-        "excessive_hunger" to "Rasa Lapar Berlebihan",
-        "increased_appetite" to "Nafsu Makan Meningkat",
-        "obesity" to "Kegemukan",
-        "acidity" to "Asam Lambung",
-        "ulcers_on_tongue" to "Luka di Lidah"
+        "excessive_hunger" to "Rasa Lapar Berlebihan"
     )
 
     fun responses(_message: String, pickedSymptoms: ArrayList<String>): String {

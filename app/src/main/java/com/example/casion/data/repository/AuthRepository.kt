@@ -8,6 +8,7 @@ import com.example.casion.util.parseError
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.HttpException
+import java.net.SocketTimeoutException
 
 class AuthRepository private constructor(
     private val authApiService: AuthApiService,

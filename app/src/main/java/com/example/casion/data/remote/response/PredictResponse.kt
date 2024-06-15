@@ -23,9 +23,9 @@ data class Data(
 	val createdAt: String,
 
 	@field:SerializedName("confidenceScore")
-	val confidenceScore: Double,
+	val confidenceScore: String,
 
-	@field:SerializedName("suggetion")
+	@field:SerializedName("suggestion")
 	val suggestion: String,
 
 	@field:SerializedName("description")

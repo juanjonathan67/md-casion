@@ -62,6 +62,24 @@ class DatabaseRepository private constructor(
         }
     }
 
+    suspend fun updateChat(
+        chatId: String,
+        chatRequest: ChatRequest
+    ) : Result<ErrorResponse> {
+        return withContext(Dispatchers.IO) {
+            try {
+                val updateChatResponse = databaseApiService.updateChat(chatId, chatRequest)
+                if (updateChatResponse.success) {
+                    return@withContext Result.Success(updateChatResponse)
+                } else {
+                    return@withContext Result.Error(updateChatResponse.message)
+                }
+            } catch (e : HttpException) {
+                return@withContext Result.Error(parseError(e))
+            }
+        }
+    }
+
     suspend fun deleteChat(
         chatId: String
     ) : Result<ErrorResponse> {

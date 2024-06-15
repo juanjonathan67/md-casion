@@ -139,8 +139,12 @@ class SignUpActivity : AppCompatActivity() {
                     prefs.saveUserToken(tokenTask.result.token.toString())
                 }
                 showToast(this, "Signed in as ${user.displayName}")
-                startActivity(Intent(this, MainActivity::class.java))
-                this.finish()
+                val intent = Intent(this, MainActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                startActivity(intent)
+                finish()
             } else {
                 showToast(this, "Get Token Error")
             }
@@ -201,7 +205,12 @@ class SignUpActivity : AppCompatActivity() {
                         is Result.Success -> {
                             binding.progressBar.visibility = View.GONE
                             showToast(this, result.data.message)
-                            startActivity(Intent(this, MainActivity::class.java))
+                            val intent = Intent(this, MainActivity::class.java)
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                            startActivity(intent)
+                            finish()
                         }
                     }
                 }

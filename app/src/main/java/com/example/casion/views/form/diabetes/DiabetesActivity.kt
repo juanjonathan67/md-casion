@@ -1,21 +1,23 @@
 package com.example.casion.views.form.diabetes
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.casion.R
+import com.example.casion.databinding.ActivityDiabetesBinding
+import com.example.casion.views.main.MainActivity
 
 class DiabetesActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityDiabetesBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContentView(R.layout.activity_diabetes)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
+        binding = ActivityDiabetesBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        binding.backButton.setOnClickListener { finish() }
     }
 }

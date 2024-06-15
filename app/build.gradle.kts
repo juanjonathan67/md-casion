@@ -23,11 +23,11 @@ android {
 
     buildTypes {
         debug {
-            buildConfigField("String", "BASE_URL_ML", "\"http://10.0.2.2:5000/\"")
+            buildConfigField("String", "BASE_URL_ML", "\"https://backend-ml-ok6osydqaq-et.a.run.app/\"")
             buildConfigField("String", "BASE_URL_DB", "\"https://backend-dot-casion-capstone.et.r.appspot.com/\"")
         }
         release {
-            buildConfigField("String", "BASE_URL_ML", "\"http://10.0.2.2:5000/\"")
+            buildConfigField("String", "BASE_URL_ML", "\"https://backend-ml-ok6osydqaq-et.a.run.app/\"")
             buildConfigField("String", "BASE_URL_DB", "\"https://backend-dot-casion-capstone.et.r.appspot.com/\"")
             isMinifyEnabled = false
             proguardFiles(

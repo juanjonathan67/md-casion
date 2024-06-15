@@ -3,6 +3,7 @@ package com.example.casion.views.main
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -62,6 +63,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var prefs: UserPreferences
     private lateinit var firebaseAuth: FirebaseAuth
     private var isLoggedIn = false
+    private var isChatSaved = false
+    private var currentChatId = ""
 
     //prediction helper variable
     private val pickedSymptoms = ArrayList<String>()
@@ -76,7 +79,6 @@ class MainActivity : AppCompatActivity() {
         mList.add(QuickChatData("Urinari", BotResponse.urinarySymptoms.values.toList()))
         mList.add(QuickChatData("Kardiovaskular", BotResponse.cardiovascularSymptoms.values.toList()))
         mList.add(QuickChatData("Endokrin", BotResponse.endocrineSymptoms.values.toList()))
-
     }
 
     @RequiresApi(Build.VERSION_CODES.Q)
@@ -107,7 +109,7 @@ class MainActivity : AppCompatActivity() {
         binding.recyclerView.adapter = quickChatAdapter
         binding.recyclerView.visibility = View.GONE
 
-        binding.root.setOnApplyWindowInsetsListener { view, insets ->
+        binding.root.setOnApplyWindowInsetsListener { _, insets ->
             val systemWindowInsets = insets.systemWindowInsets
             binding.drawerLayout.setPadding(0, systemWindowInsets.top, 0, 0)
             insets
@@ -154,8 +156,18 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
 
-                // Assuming predictViewModel.predict expects a list of original symptoms
-                predictViewModel.predict("general", originalSymptoms)
+//                 Assuming predictViewModel.predict expects a list of original symptoms
+                predictViewModel.predict("general", originalSymptoms).observe(this) { result ->
+                    when (result) {
+                        is Result.Error -> { botPredictResponse("Terjadi error saat mendiagnosa penyakitmu.") }
+                        Result.Loading -> {}
+                        is Result.Success -> {
+                            botPredictResponse("Kamu terprediksi memiliki penyakit ${result.data.data.result} dengan tingkat keyakinan ${result.data.data.confidenceScore}")
+                            botPredictResponse(result.data.data.description)
+                            botPredictResponse(result.data.data.suggestion)
+                        }
+                    }
+                }
             }
             sendMessage()
         }
@@ -185,6 +197,7 @@ class MainActivity : AppCompatActivity() {
         headerBinding.headerSignUpButton.setOnClickListener {
             val intent = Intent(this, SignUpActivity::class.java)
             startActivity(intent)
+            finish()
         }
 
         binding.quickChatTitle.setOnClickListener {
@@ -217,7 +230,7 @@ class MainActivity : AppCompatActivity() {
                 databaseViewModel.getUserDetails().observe(this) { result ->
                     when (result) {
                         is Result.Error -> {
-                            showToast(this, result.error)
+                            runBlocking { prefs.deleteUserToken() }
                         }
                         Result.Loading -> {}
                         is Result.Success -> {
@@ -241,28 +254,52 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        if (isLoggedIn && messageList.isNotEmpty()) {
-            val messagesItemList = ArrayList<MessagesItem>()
-            for (message in messageList) {
-                messagesItemList.add(
-                    MessagesItem(
-                        message.id == RECEIVE_ID,
-                        message.time,
-                        message.message
-                    )
-                )
+    override fun onRestart() {
+        isChatSaved = true
+        super.onRestart()
+    }
+
+    override fun onStop() {
+        // save chat
+        if (isLoggedIn && messageList.isNotEmpty() && !isChatSaved) {
+            databaseViewModel.storeChat(generateChatRequest()).observe(this) { result ->
+                when (result) {
+                    is Result.Error -> { showToast(this, result.error) }
+                    Result.Loading -> {}
+                    is Result.Success -> { currentChatId = result.data.chatId }
+                }
             }
-
-            val chatRequest = ChatRequest(
-                dateTime = Time.getCurrentDateTime(),
-                title = messageList.last().message,
-                messages = messagesItemList
-            )
-
-            databaseViewModel.storeChat(chatRequest)
         }
+        // update chat if chat is saved already
+        if (isLoggedIn && messageList.isNotEmpty() && isChatSaved) {
+            databaseViewModel.updateChat(currentChatId, generateChatRequest()).observe(this) { result ->
+                when (result) {
+                    is Result.Error -> { showToast(this, result.error) }
+                    Result.Loading -> {}
+                    is Result.Success -> {}
+                }
+            }
+        }
+        super.onStop()
+    }
+
+    private fun generateChatRequest() : ChatRequest {
+        val messagesItemList = ArrayList<MessagesItem>()
+        for (message in messageList) {
+            messagesItemList.add(
+                MessagesItem(
+                    message.id == RECEIVE_ID,
+                    message.time,
+                    message.message
+                )
+            )
+        }
+
+        return ChatRequest(
+            dateTime = Time.getCurrentDateTime(),
+            title = messageList.last().message,
+            messages = messagesItemList
+        )
     }
 
     private fun sendMessage() {
@@ -298,6 +335,22 @@ class MainActivity : AppCompatActivity() {
                 messageAdapter.insertMessage(MessageData(response, RECEIVE_ID, timeStamp))
 
                 binding.chatRecyclerView.scrollToPosition(messageAdapter.itemCount - 1)
+            }
+        }
+    }
+
+    private fun botPredictResponse(message: String) {
+        val timestamp = Time.getCurrentTime()
+
+        lifecycleScope.launch {
+            delay(500)
+
+            withContext(Dispatchers.Main) {
+                messageList.add(MessageData(message, RECEIVE_ID, timestamp))
+
+                messageAdapter.insertMessage(MessageData(message, RECEIVE_ID, timestamp))
+
+                binding.chatRecyclerView.scrollToPosition(messageAdapter.itemCount -1)
             }
         }
     }
