@@ -1,47 +1,129 @@
 package com.example.casion.util
 
 object BotResponse {
+    val skinAndNailsSymptoms = hashMapOf(
+        "itching" to "Gatal",
+        "skin_rash" to "Ruam Kulit",
+        "nodal_skin_eruptions" to "Eruptions Kulit Nodal",
+        "yellowish_skin" to "Kulit Kekuningan",
+        "redness_of_eyes" to "Kemerahan pada Mata",
+        "bruising" to "Memar",
+        "swollen_legs" to "Kaki Bengkak",
+        "puffy_face_and_eyes" to "Wajah dan Mata Bengkak",
+        "brittle_nails" to "Kuku Rapuh",
+        "swollen_extremities" to "Ekstremitas Bengkak",
+        "dischromic_patches" to "Bercak Diskromik",
+        "pus_filled_pimples" to "Jerawat Bernanah",
+        "blackheads" to "Komedo",
+        "scurring" to "Bekas Luka",
+        "skin_peeling" to "Pengelupasan Kulit",
+        "silver_like_dusting" to "Debu Seperti Perak",
+        "small_dents_in_nails" to "Lekukan Kecil di Kuku",
+        "inflammatory_nails" to "Kuku Meradang",
+        "blister" to "Lepuh",
+        "red_sore_around_nose" to "Luka Merah di Sekitar Hidung",
+        "yellow_crust_ooze" to "Kerak Kuning yang Mengeluarkan Cairan"
+    )
 
-    fun responses(_message: String): String {
+    val respiratorySymptoms = hashMapOf(
+        "continuous_sneezing" to "Bersin Terus-menerus",
+        "cough" to "Batuk",
+        "breathlessness" to "Sesak Napas",
+        "phlegm" to "Dahak",
+        "throat_irritation" to "Iritasi Tenggorokan",
+        "sinus_pressure" to "Tekanan Sinus",
+        "runny_nose" to "Hidung Berair",
+        "congestion" to "Kongesti",
+        "chest_pain" to "Nyeri Dada",
+        "blood_in_sputum" to "Darah dalam Dahak",
+        "mucoid_sputum" to "Dahak Mukoid",
+        "rusty_sputum" to "Dahak Berkarat"
+    )
 
+    val gastrointestinalSymptoms = hashMapOf(
+        "stomach_pain" to "Sakit Perut",
+        "acidity" to "Asam Lambung",
+        "ulcers_on_tongue" to "Luka di Lidah",
+        "vomiting" to "Muntah",
+        "diarrhoea" to "Diare",
+        "abdominal_pain" to "Nyeri Perut",
+        "constipation" to "Sembelit",
+        "yellow_urine" to "Urin Kuning",
+        "yellowing_of_eyes" to "Menguningnya Mata",
+        "fluid_overload" to "Overload Cairan",
+        "swelling_of_stomach" to "Pembengkakan Perut",
+        "belly_pain" to "Nyeri Perut",
+        "stomach_bleeding" to "Pendarahan Perut",
+        "distention_of_abdomen" to "Distensi Abdomen",
+        "pain_during_bowel_movements" to "Nyeri Saat Buang Air Besar",
+        "pain_in_anal_region" to "Nyeri di Daerah Anus",
+        "bloody_stool" to "Tinja Berdarah",
+        "irritation_in_anus" to "Iritasi di Anus",
+        "loss_of_appetite" to "Hilangnya Nafsu Makan",
+        "indigestion" to "Gangguan Pencernaan",
+        "increased_appetite" to "Nafsu Makan Meningkat",
+        "polyuria" to "Poliuria",
+        "passage_of_gases" to "Pengeluaran Gas",
+        "internal_itching" to "Gatal Internal",
+        "nausea" to "Mual",
+        "dehydration" to "Dehidrasi"
+    )
+
+    val generalSymptoms = hashMapOf(
+        "shivering" to "Menggigil",
+        "chills" to "Dingin",
+        "joint_pain" to "Nyeri Sendi",
+        "fatigue" to "Kelelahan",
+        "weight_gain" to "Penambahan Berat Badan",
+        "anxiety" to "Kecemasan",
+        "cold_hands_and_feets" to "Tangan dan Kaki Dingin",
+        "mood_swings" to "Perubahan Suasana Hati",
+        "weight_loss" to "Penurunan Berat Badan",
+        "restlessness" to "Gelisah",
+        "lethargy" to "Lesu",
+        "irregular_sugar_level" to "Kadar Gula Tidak Teratur",
+        "high_fever" to "Demam Tinggi",
+        "mild_fever" to "Demam Ringan",
+        "headache" to "Sakit Kepala",
+        "obesity" to "Kegemukan",
+        "malaise" to "Lesu",
+        "fast_heart_rate" to "Detak Jantung Cepat",
+        "toxic_look_(typhos)" to "Penampilan Toksik (Tifoid)",
+        "depression" to "Depresi",
+        "irritability" to "Iritabilitas",
+        "muscle_pain" to "Nyeri Otot",
+        "red_spots_over_body" to "Bintik Merah di Seluruh Tubuh",
+        "blurred_and_distorted_vision" to "Penglihatan Kabur dan Terganggu",
+        "visual_disturbances" to "Gangguan Penglihatan",
+        "lack_of_concentration" to "Kurang Konsentrasi",
+        "coma" to "Koma",
+        "history_of_alcohol_consumption" to "Riwayat Konsumsi Alkohol",
+        "prominent_veins_on_calf" to "Pembuluh Darah Menonjol di Betis",
+        "palpitations" to "Palpitasi"
+    )
+
+    val neurologicalSymptoms = hashMapOf(
+        "muscle_wasting" to "Penyusutan Otot",
+        "slurred_speech" to "Ucapan Tidak Jelas"
+    )
+
+    val urinarySymptoms = hashMapOf(
+        "burning_micturition" to "Buang Air Kecil Terbakar",
+        "spotting_urination" to "Bercak Urin"
+    )
+
+    val cardiovascularSymptoms = hashMapOf(
+        "prominent_veins_on_calf" to "Pembuluh Darah Menonjol di Betis"
+    )
+
+    val endocrineSymptoms = hashMapOf(
+        "enlarged_thyroid" to "Tiroid Membesar",
+        "excessive_hunger" to "Rasa Lapar Berlebihan"
+    )
+
+    fun responses(_message: String, pickedSymptoms: ArrayList<String>): String {
         val random = (0..2).random()
         val message = _message.toLowerCase()
-
-        // Define kemungkinan gejala dan penyakit yang sesuai
-        val symptomDiseaseMap = mapOf(
-            "pusing" to listOf("dehidrasi", "anemia", "migrain"),
-            "migren" to listOf("migrain", "stres"),
-            "sakit kepala" to listOf("tension headache", "migrain", "flu"),
-            "mual" to listOf("gangguan pencernaan", "keracunan makanan", "gastritis"),
-            "kram" to listOf("gastritis", "kolik", "dispepsia"),
-            "sakit perut" to listOf("gastritis", "kolik", "dispepsia"),
-            "mata merah" to listOf("konjungtivitis", "iritasi mata", "infeksi mata"),
-            "mata kering" to listOf("mata kering", "iritasi mata"),
-            "nyeri mata" to listOf("glaukoma", "iritasi mata"),
-            "sakit maag" to listOf("gastritis", "ulkus lambung"),
-            "perut kembung" to listOf("dispepsia", "gangguan pencernaan")
-        )
-
-        // Define penanganan awal untuk penyakit
-        val diseaseTreatmentMap = mapOf(
-            "dehidrasi" to "Minum air yang cukup dan istirahat.",
-            "anemia" to "Konsumsi makanan tinggi zat besi dan konsultasikan ke dokter.",
-            "migrain" to "Hindari pemicu, istirahat di tempat gelap dan minum obat pereda nyeri.",
-            "stres" to "Lakukan relaksasi dan manajemen stres.",
-            "tension headache" to "Istirahat dan konsumsi obat pereda nyeri.",
-            "flu" to "Istirahat yang cukup dan minum banyak cairan.",
-            "gangguan pencernaan" to "Hindari makanan berlemak dan pedas.",
-            "keracunan makanan" to "Minum banyak air dan konsultasikan ke dokter.",
-            "gastritis" to "Hindari makanan pedas dan minum obat antasida.",
-            "kolik" to "Kompres hangat dan minum obat pereda nyeri.",
-            "dispepsia" to "Hindari makanan berlemak dan pedas.",
-            "konjungtivitis" to "Jaga kebersihan mata dan hindari menyentuh mata.",
-            "iritasi mata" to "Hindari pemicu dan gunakan obat tetes mata.",
-            "infeksi mata" to "Konsultasikan dengan dokter untuk pengobatan yang sesuai.",
-            "mata kering" to "Gunakan obat tetes mata dan hindari lingkungan berdebu.",
-            "glaukoma" to "Konsultasikan dengan dokter untuk pengobatan yang sesuai.",
-            "ulkus lambung" to "Hindari makanan pedas dan asam, minum obat sesuai anjuran dokter."
-        )
 
         return when {
             message.contains("halo") || message.contains("hai") -> {
@@ -52,24 +134,13 @@ object BotResponse {
                 }
             }
 
-            message.contains("pusing") || message.contains("migren") || message.contains("sakit kepala") ||
-                    message.contains("mual") || message.contains("kram") || message.contains("sakit perut") ||
-                    message.contains("mata merah") || message.contains("mata kering") || message.contains("nyeri mata") ||
-                    message.contains("sakit maag") || message.contains("perut kembung") -> {
-
-                val symptoms = message.split(" ").filter { symptomDiseaseMap.containsKey(it) }
-                val possibleDiseases = symptoms.flatMap { symptomDiseaseMap[it] ?: emptyList() }.groupingBy { it }.eachCount()
-                val mostLikelyDisease = possibleDiseases.maxByOrNull { it.value }?.key
-                val treatment = diseaseTreatmentMap[mostLikelyDisease] ?: "Silakan konsultasikan dengan dokter."
-
-                "Berdasarkan gejala yang kamu sebutkan, kemungkinan besar kamu mengalami $mostLikelyDisease. Penanganan awal yang disarankan: $treatment"
-            }
-
             else -> {
-                when (random) {
-                    0 -> "Maaf, saya tidak paham"
-                    1 -> "Maaf saya memiliki batasan untuk memahami pesan"
-                    else -> "Maaf, saya tidak mengerti"
+                // Create response message including the list of picked symptoms as bullet points
+                if (pickedSymptoms.isNotEmpty()) {
+                    val symptomsList = pickedSymptoms.joinToString("\n") { "• $it" }
+                    "Gejala yang sudah kamu sebutkan:\n$symptomsList"
+                } else {
+                    "Maaf, saya tidak mengerti gejalanya."
                 }
             }
         }
