@@ -7,23 +7,30 @@ import java.time.LocalTime
 import java.time.Period
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
+import java.util.Locale
 
 private const val DATE_TIME_PATTERN = "EE, d MMMM yyyy HH:mm"
 private const val DATE_PATTERN = "yyyy-MM-dd"
+private const val DATE_READABLE_PATTERN = "EE, d MMMM yyyy"
 private const val TIME_PATTERN = "HH:mm"
 
 object Time {
-    private val dateTimeFormatter = DateTimeFormatter.ofPattern(DATE_TIME_PATTERN)
+    private val dateTimeFormatter = DateTimeFormatter.ofPattern(DATE_TIME_PATTERN, Locale.US)
     private val dateFormatter = DateTimeFormatter.ofPattern(DATE_PATTERN)
+    private val dateReadableFormatter = DateTimeFormatter.ofPattern(DATE_READABLE_PATTERN, Locale.US)
     private val timeFormatter = DateTimeFormatter.ofPattern(TIME_PATTERN)
 
     fun localDateTimeParser(dateTime: String) : LocalDateTime = LocalDateTime.parse(dateTime, dateTimeFormatter)
+
+    fun localDateParser(date: String): LocalDate = LocalDate.parse(date)
 
     fun getCurrentTime(): String = LocalTime.now().format(timeFormatter)
 
     fun getCurrentDateTime(): String = LocalDateTime.now().format(dateTimeFormatter)
 
     fun getDateFromDateTime(dateTime: String) : String = localDateTimeParser(dateTime).toLocalDate().format(dateFormatter)
+
+    fun getReadableDateFromDate(date: String) : String = localDateParser(date).format(dateReadableFormatter)
 
     fun getTimeFromDateTime(dateTime: String) : String = localDateTimeParser(dateTime).format(timeFormatter)
 
@@ -41,4 +48,6 @@ object Time {
         ZoneId.systemDefault()).toLocalDate()
 
     fun getAgeFromLocalDate(localDate: String): String = Period.between(LocalDate.parse(localDate, dateFormatter), LocalDate.now()).years.toString()
+
+
 }

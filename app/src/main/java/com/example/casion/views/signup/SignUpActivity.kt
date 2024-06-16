@@ -206,9 +206,9 @@ class SignUpActivity : AppCompatActivity() {
                             binding.progressBar.visibility = View.GONE
                             showToast(this, result.data.message)
                             val intent = Intent(this, MainActivity::class.java)
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-//                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-//                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                                .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                                .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                             startActivity(intent)
                             finish()
                         }

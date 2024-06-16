@@ -5,8 +5,25 @@
         android:checkableBehavior="single"
         >
         <item
-            android:id="@+id/pesanbaru"
-            android:title="Pesan Baru"
+            android:id="@+id/chatbaru"
+            android:title="Chat Baru"
+            />
+        <item
+            android:id="@+id/pemeriksaandiabetes"
+            android:title="Pemeriksaan Diabetes"
+            />
+        <item
+            android:id="@+id/pemeriksaanjantung"
+            android:title="Pemeriksaan Jantung"
+            />
+        <item
+            android:id="@+id/riwayatchat"
+            android:title="Riwayat Chat"
+            />
+
+        <item
+            android:id="@+id/riwayatpenyakit"
+            android:title="Riwayat Penyakit"
             />
         <item
             android:id="@+id/kebijakanprivasi"

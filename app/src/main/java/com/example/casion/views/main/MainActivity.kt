@@ -23,6 +23,8 @@ import com.example.casion.data.QuickChatData
 import com.example.casion.data.remote.request.ChatRequest
 import com.example.casion.data.remote.request.DiseaseRequest
 import com.example.casion.data.remote.request.MessagesItem
+import com.example.casion.data.remote.response.ChatsItem
+import com.example.casion.data.remote.response.Data
 import com.example.casion.data.result.Result
 import com.example.casion.databinding.ActivityMainBinding
 import com.example.casion.databinding.DrawerHeaderBinding
@@ -39,6 +41,9 @@ import com.example.casion.viewmodel.AuthViewModel
 import com.example.casion.viewmodel.DatabaseViewModel
 import com.example.casion.viewmodel.PredictViewModel
 import com.example.casion.views.form.diabetes.DiabetesActivity
+import com.example.casion.views.form.diabetes.DiabetesResultActivity
+import com.example.casion.views.form.jantung.JantungActivity
+import com.example.casion.views.history.HistoryActivity
 import com.example.casion.views.mapview.MapsActivity
 import com.example.casion.views.signup.SignUpActivity
 import com.google.android.material.button.MaterialButton
@@ -70,6 +75,7 @@ class MainActivity : AppCompatActivity() {
 
     //prediction helper variable
     private val pickedSymptoms = ArrayList<String>()
+    private var currentPrediction = "No Prediction"
 
     //QuickChat Dummy Data
     private fun addDataToList() {
@@ -88,10 +94,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         installSplashScreen()
 
+        isChatSaved = false
+
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        sessionManager()
 
         binding.quickchat.visibility = View.GONE
 
@@ -119,7 +125,11 @@ class MainActivity : AppCompatActivity() {
 
         recyclerView()
 
+        navigationDrawer()
+
         clickEvents()
+
+        sessionManager()
     }
 
     private fun toggleRecyclerViewVisibility() {
@@ -165,6 +175,7 @@ class MainActivity : AppCompatActivity() {
                         Result.Loading -> {}
                         is Result.Success -> {
                             val prediction = result.data.data
+                            currentPrediction = prediction.result
                             botPredictResponse("Kamu terprediksi memiliki penyakit ${prediction.result} dengan tingkat keyakinan ${prediction.confidenceScore}")
                             botPredictResponse(prediction.description)
                             botPredictResponse(prediction.suggestion)
@@ -222,17 +233,12 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun recyclerView() {
-        messageAdapter = MessageAdapter()
-        binding.chatRecyclerView.adapter = messageAdapter
-        binding.chatRecyclerView.layoutManager = LinearLayoutManager(applicationContext)
-    }
-
     private fun sessionManager() {
         firebaseAuth = FirebaseAuth.getInstance()
         val googleUser = firebaseAuth.currentUser
         val headerBinding = DrawerHeaderBinding.bind(binding.navView.getHeaderView(0))
         prefs = UserPreferences.getInstance(this.datastore)
+
         if (googleUser != null) {
             Glide.with(this)
                 .load(googleUser.photoUrl)
@@ -257,6 +263,28 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
             }
+        }
+
+        val chatHistoryItem: ChatsItem? = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            intent.getParcelableExtra(CHAT_HISTORY_ITEM, ChatsItem::class.java)
+        } else {
+            intent.getParcelableExtra(CHAT_HISTORY_ITEM)
+        }
+
+        if (chatHistoryItem != null) {
+            val messageItems = ArrayList<MessageData>()
+            for (message in chatHistoryItem.messages) {
+                val newMessage = MessageData(
+                    message.message,
+                    if (message.bot) RECEIVE_ID else SEND_ID,
+                    message.time
+                )
+                messageItems.add(newMessage)
+                messageAdapter.insertMessage(newMessage)
+            }
+            messageList = messageItems
+            currentChatId = chatHistoryItem.chatId
+            isChatSaved = true
         }
     }
 
@@ -313,9 +341,52 @@ class MainActivity : AppCompatActivity() {
 
         return ChatRequest(
             dateTime = Time.getCurrentDateTime(),
-            title = messageList.last().message,
+            title = currentPrediction,
             messages = messagesItemList
         )
+    }
+
+    private fun recyclerView() {
+        messageAdapter = MessageAdapter()
+        binding.chatRecyclerView.adapter = messageAdapter
+        binding.chatRecyclerView.layoutManager = LinearLayoutManager(applicationContext)
+    }
+
+    private fun navigationDrawer() {
+        binding.navView.setNavigationItemSelectedListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.chatbaru -> {
+                    finish()
+                    startActivity(Intent(this, MainActivity::class.java)
+                        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                        .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                    )
+                    true
+                }
+                R.id.pemeriksaandiabetes -> {
+                    startActivity(Intent(this, DiabetesActivity::class.java))
+                    true
+                }
+                R.id.pemeriksaanjantung -> {
+                    startActivity(Intent(this, JantungActivity::class.java))
+                    true
+                }
+                R.id.riwayatchat -> {
+                    startActivity(Intent(this, HistoryActivity::class.java))
+                    true
+                }
+                R.id.kebijakanprivasi -> {
+                    true
+                }
+                R.id.pengaturan -> {
+                    true
+                }
+                else -> {
+                    false
+                }
+            }
+        }
     }
 
     private fun sendMessage() {
@@ -373,5 +444,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun getKeyFromValue(map: Map<String, String>, value: String): String? {
         return map.entries.firstOrNull { it.value == value }?.key
+    }
+
+    companion object {
+        const val CHAT_HISTORY_ITEM = "chat_history_item"
     }
 }

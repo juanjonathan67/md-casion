@@ -1,11 +1,9 @@
 package com.example.casion.views.form.diabetes
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.example.casion.R
 import com.example.casion.data.remote.response.Data
 import com.example.casion.databinding.ActivityDiabetesResultBinding
@@ -20,7 +18,7 @@ class DiabetesResultActivity : AppCompatActivity() {
         binding = ActivityDiabetesResultBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val data: Data? = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
+        val data: Data? = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             intent.getParcelableExtra(PREDICTION_RESULT, Data::class.java)
         } else {
             intent.getParcelableExtra(PREDICTION_RESULT)
