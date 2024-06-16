@@ -12,6 +12,9 @@
         android:theme="@style/Theme.App.Starting"
         tools:targetApi="31">
         <activity
+            android:name=".views.history.HistoryActivity"
+            android:exported="false" />
+        <activity
             android:name=".views.form.diabetes.DiabetesResultActivity"
             android:exported="false"
             android:theme="@style/Theme.Casion" />
