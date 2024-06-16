@@ -207,8 +207,8 @@ class SignUpActivity : AppCompatActivity() {
                             showToast(this, result.data.message)
                             val intent = Intent(this, MainActivity::class.java)
                             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+//                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+//                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                             startActivity(intent)
                             finish()
                         }

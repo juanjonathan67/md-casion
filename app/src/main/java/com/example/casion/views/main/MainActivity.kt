@@ -21,6 +21,7 @@ import com.example.casion.adapter.QuickChatAdapter
 import com.example.casion.data.MessageData
 import com.example.casion.data.QuickChatData
 import com.example.casion.data.remote.request.ChatRequest
+import com.example.casion.data.remote.request.DiseaseRequest
 import com.example.casion.data.remote.request.MessagesItem
 import com.example.casion.data.result.Result
 import com.example.casion.databinding.ActivityMainBinding
@@ -38,6 +39,7 @@ import com.example.casion.viewmodel.AuthViewModel
 import com.example.casion.viewmodel.DatabaseViewModel
 import com.example.casion.viewmodel.PredictViewModel
 import com.example.casion.views.form.diabetes.DiabetesActivity
+import com.example.casion.views.mapview.MapsActivity
 import com.example.casion.views.signup.SignUpActivity
 import com.google.android.material.button.MaterialButton
 import com.google.firebase.auth.FirebaseAuth
@@ -162,9 +164,20 @@ class MainActivity : AppCompatActivity() {
                         is Result.Error -> { botPredictResponse("Terjadi error saat mendiagnosa penyakitmu.") }
                         Result.Loading -> {}
                         is Result.Success -> {
-                            botPredictResponse("Kamu terprediksi memiliki penyakit ${result.data.data.result} dengan tingkat keyakinan ${result.data.data.confidenceScore}")
-                            botPredictResponse(result.data.data.description)
-                            botPredictResponse(result.data.data.suggestion)
+                            val prediction = result.data.data
+                            botPredictResponse("Kamu terprediksi memiliki penyakit ${prediction.result} dengan tingkat keyakinan ${prediction.confidenceScore}")
+                            botPredictResponse(prediction.description)
+                            botPredictResponse(prediction.suggestion)
+                            if (isLoggedIn) {
+                                databaseViewModel.storeDisease(DiseaseRequest(
+                                    "general",
+                                    prediction.result,
+                                    prediction.description,
+                                    prediction.suggestion,
+                                    prediction.confidenceScore,
+                                    prediction.createdAt
+                                ))
+                            }
                         }
                     }
                 }
@@ -204,6 +217,9 @@ class MainActivity : AppCompatActivity() {
             toggleRecyclerViewVisibility()
         }
 
+        binding.mapView.setOnClickListener {
+            startActivity(Intent(this@MainActivity, MapsActivity::class.java))
+        }
     }
 
     private fun recyclerView() {
@@ -300,6 +316,10 @@ class MainActivity : AppCompatActivity() {
             title = messageList.last().message,
             messages = messagesItemList
         )
+    }
+
+    private fun savePrediction() {
+        databaseViewModel
     }
 
     private fun sendMessage() {

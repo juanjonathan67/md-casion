@@ -4,11 +4,9 @@ import com.example.casion.data.remote.response.LoginResponse
 import com.example.casion.data.remote.retrofit.AuthApiService
 import com.example.casion.util.UserPreferences
 import com.example.casion.data.result.Result
-import com.example.casion.util.parseError
+import com.example.casion.util.parseException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import retrofit2.HttpException
-import java.net.SocketTimeoutException
 
 class AuthRepository private constructor(
     private val authApiService: AuthApiService,
@@ -30,8 +28,8 @@ class AuthRepository private constructor(
                 } else {
                     return@withContext Result.Error(registerResponse.message)
                 }
-            } catch (e : HttpException) {
-                return@withContext Result.Error(parseError(e))
+            } catch (e : Exception) {
+                return@withContext Result.Error(parseException(e))
             }
         }
     }
@@ -49,8 +47,8 @@ class AuthRepository private constructor(
                 } else {
                     return@withContext Result.Error(loginResponse.message)
                 }
-            } catch (e : HttpException) {
-                return@withContext Result.Error(parseError(e))
+            } catch (e : Exception) {
+                return@withContext Result.Error(parseException(e))
             }
         }
     }
@@ -66,8 +64,8 @@ class AuthRepository private constructor(
                 } else {
                     return@withContext Result.Error(response.message)
                 }
-            } catch (e: HttpException) {
-                return@withContext Result.Error(e.message ?: "Error Occurred")
+            } catch (e : Exception) {
+                return@withContext Result.Error(parseException(e))
             }
         }
     }

@@ -5,8 +5,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.casion.data.remote.request.ChatRequest
+import com.example.casion.data.remote.request.DiseaseRequest
 import com.example.casion.data.remote.response.ErrorResponse
 import com.example.casion.data.remote.response.StoreChatResponse
+import com.example.casion.data.remote.response.StoreDiseaseResponse
 import com.example.casion.data.remote.response.UserDetailsResponse
 import com.example.casion.data.repository.DatabaseRepository
 import com.example.casion.data.result.Result
@@ -26,6 +28,14 @@ class DatabaseViewModel (private val databaseRepository: DatabaseRepository?) : 
         val result: MutableLiveData<Result<StoreChatResponse>> = MutableLiveData(Result.Loading)
         viewModelScope.launch {
             result.value = databaseRepository?.storeChat(chatRequest)
+        }
+        return result
+    }
+
+    fun storeDisease(diseaseRequest: DiseaseRequest) : LiveData<Result<StoreDiseaseResponse>> {
+        val result: MutableLiveData<Result<StoreDiseaseResponse>> = MutableLiveData(Result.Loading)
+        viewModelScope.launch {
+            result.value = databaseRepository?.storeDisease(diseaseRequest)
         }
         return result
     }

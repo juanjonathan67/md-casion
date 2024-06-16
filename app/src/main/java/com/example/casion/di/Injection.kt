@@ -12,7 +12,7 @@ import kotlinx.coroutines.runBlocking
 
 object Injection {
     fun providePredictRepository(context: Context) : PredictRepository {
-        val apiService = ApiConfig.getChatApiService()
+        val apiService = ApiConfig.getPredictApiService()
         return PredictRepository.getInstance(apiService)
     }
 

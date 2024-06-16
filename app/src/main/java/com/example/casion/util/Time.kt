@@ -1,17 +1,15 @@
 package com.example.casion.util
 
-import java.sql.Date
-import java.sql.Timestamp
-import java.text.SimpleDateFormat
 import java.time.Instant
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
+import java.time.Period
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 
 private const val DATE_TIME_PATTERN = "EE, d MMMM yyyy HH:mm"
-private const val DATE_PATTERN = "d/M/yy"
+private const val DATE_PATTERN = "yyyy-MM-dd"
 private const val TIME_PATTERN = "HH:mm"
 
 object Time {
@@ -41,4 +39,6 @@ object Time {
 
     fun localDateFromTimestamp(timestamp: Long): LocalDate = Instant.ofEpochMilli(timestamp).atZone(
         ZoneId.systemDefault()).toLocalDate()
+
+    fun getAgeFromLocalDate(localDate: String): String = Period.between(LocalDate.parse(localDate, dateFormatter), LocalDate.now()).years.toString()
 }

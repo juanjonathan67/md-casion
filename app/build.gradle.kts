@@ -5,6 +5,22 @@ plugins {
     id("com.google.devtools.ksp")
     id("androidx.navigation.safeargs")
     id("kotlin-parcelize")
+    alias(libs.plugins.google.android.libraries.mapsplatform.secrets.gradle.plugin)
+}
+
+secrets {
+    // Optionally specify a different file name containing your secrets.
+    // The plugin defaults to "local.properties"
+    propertiesFileName = "secrets.properties"
+
+    // A properties file containing default secret values. This file can be
+    // checked in version control.
+    defaultPropertiesFileName = "local.defaults.properties"
+
+    // Configure which keys should be ignored by the plugin by providing regular expressions.
+    // "sdk.dir" is ignored by default.
+    ignoreList.add("keyToIgnore") // Ignore the key "keyToIgnore"
+    ignoreList.add("sdk.*")       // Ignore all keys matching the regexp "sdk.*"
 }
 
 android {
@@ -59,6 +75,7 @@ dependencies {
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
     implementation(libs.firebase.auth)
+    implementation(libs.play.services.maps)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -98,4 +115,9 @@ dependencies {
     implementation("com.google.android.gms:play-services-auth:21.2.0")
     implementation("com.google.firebase:firebase-auth")
     implementation("com.google.firebase:firebase-analytics")
+
+    // gmaps api
+    implementation("com.google.android.gms:play-services-maps:18.1.0")
+    implementation(libs.kotlin.bom)
+    implementation(libs.places)
 }
