@@ -318,10 +318,6 @@ class MainActivity : AppCompatActivity() {
         )
     }
 
-    private fun savePrediction() {
-        databaseViewModel
-    }
-
     private fun sendMessage() {
         val message = binding.etMessage.text.toString()
         val timeStamp = Time.getCurrentTime()

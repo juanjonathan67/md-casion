@@ -1,16 +1,14 @@
 package com.example.casion.views.form.diabetes
 
+import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.text.isDigitsOnly
-import com.bumptech.glide.Glide
 import com.example.casion.data.remote.request.DiseaseRequest
+import com.example.casion.data.remote.response.Data
 import com.example.casion.data.result.Result
 import com.example.casion.databinding.ActivityDiabetesBinding
-import com.example.casion.databinding.DrawerHeaderBinding
 import com.example.casion.util.Time
 import com.example.casion.util.UserPreferences
 import com.example.casion.util.ViewModelFactory
@@ -18,6 +16,7 @@ import com.example.casion.util.datastore
 import com.example.casion.util.showToast
 import com.example.casion.viewmodel.DatabaseViewModel
 import com.example.casion.viewmodel.PredictViewModel
+import com.example.casion.views.form.diabetes.DiabetesResultActivity.Companion.PREDICTION_RESULT
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
@@ -206,7 +205,7 @@ class DiabetesActivity : AppCompatActivity() {
                     Result.Loading -> {}
                     is Result.Success -> {
                         val prediction = result.data.data
-                        Log.d("Diabetes test", prediction.toString())
+
                         // intent to result
                         if (isLoggedIn) {
                             databaseViewModel.storeDisease(DiseaseRequest(
@@ -219,6 +218,10 @@ class DiabetesActivity : AppCompatActivity() {
                                 )
                             )
                         }
+
+                        val intent = Intent(this, DiabetesResultActivity::class.java)
+                        intent.putExtra(PREDICTION_RESULT, prediction)
+                        startActivity(intent)
                     }
                 }
             }
