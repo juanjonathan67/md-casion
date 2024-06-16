@@ -25,6 +25,10 @@
             android:exported="false"
             android:label="@string/title_activity_maps" />
         <activity
+            android:name=".views.form.diabetes.DiabetesResultActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Casion" />
+        <activity
             android:name=".views.form.jantung.JantungActivity"
             android:exported="false"
             android:theme="@style/Theme.Casion" />
