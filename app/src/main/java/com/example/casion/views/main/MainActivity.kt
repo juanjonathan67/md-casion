@@ -37,7 +37,6 @@ import com.example.casion.util.showToast
 import com.example.casion.viewmodel.AuthViewModel
 import com.example.casion.viewmodel.DatabaseViewModel
 import com.example.casion.viewmodel.PredictViewModel
-import com.example.casion.views.form.diabetes.DiabetesActivity
 import com.example.casion.views.signup.SignUpActivity
 import com.google.android.material.button.MaterialButton
 import com.google.firebase.auth.FirebaseAuth
@@ -190,7 +189,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.SignUpbutton.setOnClickListener {
-            val intent = Intent(this, DiabetesActivity::class.java)
+            val intent = Intent(this, SignUpActivity::class.java)
             startActivity(intent)
         }
 
