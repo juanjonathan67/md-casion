@@ -17,7 +17,7 @@
         <item>Nyeri dada bukan karena jantung</item>
         <item>Tidak nyeri dada</item>
     </string-array>
-    
+
     <string-array name="pendidikan_spinner">
         <item>Tidak/Belum sekolah atau hanya TK</item>
         <item>SD</item>
