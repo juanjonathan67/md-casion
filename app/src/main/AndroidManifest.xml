@@ -25,6 +25,15 @@
             android:exported="false"
             android:label="@string/title_activity_maps" />
         <activity
+            android:name=".views.setting.SettingActivity"
+            android:exported="false" />
+        <activity
+            android:name=".views.form.FormOnboardActivity"
+            android:exported="false" />
+        <activity
+            android:name=".views.form.jantung.JantugResultActivity"
+            android:exported="false" />
+        <activity
             android:name=".views.history.HistoryActivity"
             android:exported="false"
             android:theme="@style/Theme.Casion" />
