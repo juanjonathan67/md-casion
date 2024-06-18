@@ -76,8 +76,10 @@ class MainActivity : AppCompatActivity() {
     private var currentChatId = ""
 
     //prediction helper variable
+    private val originalSymptoms = ArrayList<String>()
     private val pickedSymptoms = ArrayList<String>()
     private var currentPrediction = "No Prediction"
+    private var currentMessage = ""
 
     //QuickChat Dummy Data
     private fun addDataToList() {
@@ -96,20 +98,18 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         installSplashScreen()
 
+        botPredictResponse("Halo 👋, saya Casion akan membantu anda mengidentifikasi penyakitmu, silahkan ketik gejalamu atau bisa dicari melalui quick chat agar Casion bisa memulai proses diagnosis.")
+
         isChatSaved = false
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        binding.quickchat.visibility = View.GONE
 
         binding.recyclerView.setHasFixedSize(true)
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
         addDataToList()
 
         quickChatAdapter = QuickChatAdapter(mList, contentTextSize = 16f) { selectedText ->
-            pickedSymptoms.add(selectedText)
-
             val currentText = binding.etMessage.text.toString()
             binding.etMessage.setText(
                 if (currentText.isEmpty()) "$selectedText," else "$currentText $selectedText,"
@@ -124,6 +124,8 @@ class MainActivity : AppCompatActivity() {
             binding.drawerLayout.setPadding(0, systemWindowInsets.top, 0, 0)
             insets
         }
+
+        binding.quickchat.visibility = View.GONE
 
         recyclerView()
 
@@ -148,7 +150,9 @@ class MainActivity : AppCompatActivity() {
         val headerBinding = DrawerHeaderBinding.bind(binding.navView.getHeaderView(0))
 
         binding.sendButton.setOnClickListener {
-            if(pickedSymptoms.size >= 3) {
+            currentMessage = binding.etMessage.text.toString()
+            if (currentMessage.isNotEmpty()) {
+                sendMessage()
                 val allMaps = listOf(
                     BotResponse.skinAndNailsSymptoms,
                     BotResponse.respiratorySymptoms,
@@ -160,54 +164,66 @@ class MainActivity : AppCompatActivity() {
                     BotResponse.endocrineSymptoms
                 )
 
-                // Create an ArrayList to store original symptoms
-                val originalSymptoms = ArrayList<String>()
-
-                // Iterate over pickedSymptoms and add corresponding original symptoms
-                pickedSymptoms.forEach { pickedSymptom ->
-                    allMaps.forEach { map ->
-                        getKeyFromValue(map, pickedSymptom)?.let { originalSymptoms.add(it) }
+                // Iterate over allMaps and scan the currentMessage for any keys
+                allMaps.forEach { map ->
+                    map.forEach { (key, value) ->
+                        if (currentMessage.contains(value.lowercase(), ignoreCase = true)) {
+                            originalSymptoms.add(key)
+                            pickedSymptoms.add(value)
+                        }
                     }
                 }
 
-//                 Assuming predictViewModel.predict expects a list of original symptoms
-                predictViewModel.predict("general", originalSymptoms).observe(this) { result ->
-                    when (result) {
-                        is Result.Error -> { botPredictResponse("Terjadi error saat mendiagnosa penyakitmu.") }
-                        Result.Loading -> {}
-                        is Result.Success -> {
-                            val prediction = result.data.data
-                            currentPrediction = prediction.result
-                            botPredictResponse("Kamu terprediksi memiliki penyakit ${prediction.result} dengan tingkat keyakinan ${prediction.confidenceScore}")
-                            botPredictResponse(prediction.description)
-                            botPredictResponse(prediction.suggestion)
-                            if (isLoggedIn) {
-                                databaseViewModel.storeDisease(DiseaseRequest(
-                                    "general",
-                                    prediction.result,
-                                    prediction.description,
-                                    prediction.suggestion,
-                                    prediction.confidenceScore,
-                                    prediction.createdAt
-                                ))
+                Log.d("Symptoms", originalSymptoms.toString())
+
+                if (originalSymptoms.size >= 3) {
+                    if (originalSymptoms.size > 5) {
+                        botPredictResponse("Gejala yang dipilih maksimal 5. Sehingga, kami akan mendiagnosa penyakit anda berdasarkan 5 gejala pertama.")
+                        originalSymptoms.subList(5, originalSymptoms.size).clear()
+                        pickedSymptoms.subList(5, pickedSymptoms.size).clear()
+                    }
+                    // Assuming predictViewModel.predict expects a list of original symptoms
+                    predictViewModel.predict("general", originalSymptoms).observe(this) { result ->
+                        when (result) {
+                            is Result.Error -> { botPredictResponse("Terjadi error saat mendiagnosa penyakitmu.") }
+                            Result.Loading -> { botPredictResponse("Penyakitmu sedang didiagnosa, mohon ditunggu hasilnya...") }
+                            is Result.Success -> {
+                                val prediction = result.data.data
+                                currentPrediction = prediction.result
+                                botPredictResponse("Kamu terprediksi memiliki penyakit ${prediction.result} dengan tingkat keyakinan ${prediction.confidenceScore}")
+                                botPredictResponse(prediction.description)
+                                botPredictResponse(prediction.suggestion)
+                                if (isLoggedIn) {
+                                    databaseViewModel.storeDisease(DiseaseRequest(
+                                        "general",
+                                        prediction.result,
+                                        prediction.description,
+                                        prediction.suggestion,
+                                        prediction.confidenceScore,
+                                        prediction.createdAt
+                                    ))
+                                }
                             }
                         }
                     }
                 }
             }
-            sendMessage()
         }
 
-        binding.etMessage.setOnClickListener {
-            lifecycleScope.launch {
-                delay(100)
-
+        binding.etMessage.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
                 binding.quickchat.visibility = View.VISIBLE
 
-                withContext(Dispatchers.Main) {
-                    binding.chatRecyclerView.scrollToPosition(messageAdapter.itemCount - 1)
+                lifecycleScope.launch {
+                    delay(100)
 
+                    withContext(Dispatchers.Main) {
+                        binding.chatRecyclerView.scrollToPosition(messageAdapter.itemCount - 1)
+
+                    }
                 }
+            } else {
+                binding.quickchat.visibility = View.GONE
             }
         }
 
@@ -407,8 +423,6 @@ class MainActivity : AppCompatActivity() {
             binding.imageView.visibility = View.GONE
 
             botResponse(message)
-
-            binding.quickchat.visibility = View.GONE
         }
     }
 
@@ -446,6 +460,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    // Function to get the key from value
     private fun getKeyFromValue(map: Map<String, String>, value: String): String? {
         return map.entries.firstOrNull { it.value == value }?.key
     }

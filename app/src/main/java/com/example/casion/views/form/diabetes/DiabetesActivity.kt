@@ -2,6 +2,7 @@ package com.example.casion.views.form.diabetes
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.text.isDigitsOnly
@@ -20,6 +21,7 @@ import com.example.casion.views.form.diabetes.DiabetesResultActivity.Companion.P
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
+import kotlin.math.pow
 
 class DiabetesActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDiabetesBinding
@@ -118,16 +120,31 @@ class DiabetesActivity : AppCompatActivity() {
                 }
             }
 
-            val bmiText = binding.etBmi.text
-            if (bmiText.isNotEmpty() &&
-                bmiText.isNotBlank() &&
-                bmiText.isDigitsOnly()
+            val heightText = binding.etTinggiBadan.text
+            var height = 0
+            if (heightText.isNotEmpty() &&
+                heightText.isNotBlank() &&
+                heightText.isDigitsOnly()
                 ) {
-                stringBuilder.append("${bmiText},")
+                height = Integer.parseInt(heightText.trimEnd().toString())
             } else {
                 showToast(this, "Pengisian bmi tidak benar")
                 return@setOnClickListener
             }
+
+            val weightText = binding.etBeratBadan.text
+            var weight = 0
+            if (weightText.isNotEmpty() &&
+                weightText.isNotBlank() &&
+                weightText.isDigitsOnly()
+            ) {
+                weight = Integer.parseInt(weightText.trimEnd().toString()) / 100
+            } else {
+                showToast(this, "Pengisian bmi tidak benar")
+                return@setOnClickListener
+            }
+
+            stringBuilder.append("${weight / height.toDouble().pow(2)},")
 
             val fitnessText = binding.etkesehatanFisik.text
             if (fitnessText.isNotEmpty() &&
@@ -199,9 +216,16 @@ class DiabetesActivity : AppCompatActivity() {
 
             predictViewModel.predict("diabetes", stringBuilder.toString()).observe(this) { result ->
                 when (result) {
-                    is Result.Error -> { showToast(this, result.error) }
-                    Result.Loading -> {}
+                    is Result.Error -> {
+                        binding.progressBar.visibility = View.GONE
+                        showToast(this, result.error)
+                    }
+                    Result.Loading -> {
+                        binding.progressBar.visibility = View.VISIBLE
+                    }
                     is Result.Success -> {
+                        binding.progressBar.visibility = View.GONE
+
                         val prediction = result.data.data
 
                         // intent to result

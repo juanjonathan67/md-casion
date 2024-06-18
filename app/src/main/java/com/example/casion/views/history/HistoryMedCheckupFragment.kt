@@ -51,14 +51,20 @@ class HistoryMedCheckupFragment : Fragment() {
 
     private fun getDiseaseHistory() {
         lifecycleScope.launch {
+            binding.progressBar.visibility = View.VISIBLE
             delay(250)
         }
 
         databaseViewModel.getDiseaseHistory().observe(viewLifecycleOwner) { result ->
             when (result) {
-                is Result.Error -> { showToast(requireContext(), result.error) }
+                is Result.Error -> {
+                    binding.progressBar.visibility = View.GONE
+                    showToast(requireContext(), result.error)
+                }
                 Result.Loading -> {}
                 is Result.Success -> {
+                    binding.progressBar.visibility = View.GONE
+
                     val groupedChats = result.data.diseases.groupBy { disease ->
                         // Extract the date part from dateTime
                         Time.getDateFromZonedDateTime(disease.createdAt)

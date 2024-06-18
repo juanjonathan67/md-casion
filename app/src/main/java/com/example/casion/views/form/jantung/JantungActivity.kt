@@ -2,6 +2,7 @@ package com.example.casion.views.form.jantung
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.text.isDigitsOnly
@@ -158,9 +159,14 @@ class JantungActivity : AppCompatActivity() {
 
             predictViewModel.predict("heart", stringBuilder.toString()).observe(this) { result ->
                 when (result) {
-                    is Result.Error -> { showToast(this, result.error) }
-                    Result.Loading -> {}
+                    is Result.Error -> {
+                        binding.progressBar.visibility = View.GONE
+                        showToast(this, result.error)
+                    }
+                    Result.Loading -> { binding.progressBar.visibility = View.VISIBLE }
                     is Result.Success -> {
+                        binding.progressBar.visibility = View.GONE
+
                         val prediction = result.data.data
 
                         // intent to result

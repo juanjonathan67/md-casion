@@ -25,7 +25,7 @@ object Time {
 
     fun localDateParser(date: String): LocalDate = LocalDate.parse(date)
 
-    fun zonedDateTimeParser(zonedDateTime: String): ZonedDateTime = ZonedDateTime.ofInstant(Instant.parse(zonedDateTime), ZoneId.of("UTC"))
+    fun zonedDateTimeParser(zonedDateTime: String): ZonedDateTime = ZonedDateTime.ofInstant(Instant.parse(zonedDateTime), ZoneId.systemDefault())
 
     fun getCurrentTime(): String = LocalTime.now().format(timeFormatter)
 

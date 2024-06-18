@@ -54,14 +54,19 @@ class HistoryChatFragment : Fragment() {
 
     private fun getChatHistory() {
         lifecycleScope.launch {
+            binding.progressBar.visibility = View.VISIBLE
             delay(250)
         }
 
         databaseViewModel.getChatHistory().observe(viewLifecycleOwner) { result ->
             when (result) {
-                is Result.Error -> { showToast(requireContext(), result.error) }
+                is Result.Error -> {
+                    binding.progressBar.visibility = View.GONE
+                    showToast(requireContext(), result.error)
+                }
                 Result.Loading -> {}
                 is Result.Success -> {
+                    binding.progressBar.visibility = View.GONE
                     val groupedChats = result.data.chats.groupBy { chat ->
                         // Extract the date part from dateTime
                         Time.getDateFromDateTime(chat.dateTime)

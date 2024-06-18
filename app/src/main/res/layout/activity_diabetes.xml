@@ -1,568 +1,617 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true">
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/main"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/neutral_10"
-        tools:context=".views.form.diabetes.DiabetesActivity">
+        android:layout_height="match_parent" >
 
-        <LinearLayout
-            android:id="@+id/appBar"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/main"
             android:layout_width="match_parent"
-            android:orientation="horizontal"
-            android:gravity="center|start"
             android:layout_height="wrap_content"
             android:background="@color/neutral_10"
-            android:fitsSystemWindows="true"
-            android:paddingHorizontal="16dp"
-            android:paddingVertical="8dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            tools:context=".views.form.diabetes.DiabetesActivity">
 
-            <ImageButton
-                android:id="@+id/backButton"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:adjustViewBounds="true"
-                android:background="@color/neutral_10"
-                android:padding="4dp"
-                android:scaleType="fitCenter"
-                android:src="@drawable/ic_back"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Pemeriksaan Medis Diabetes"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:layout_marginStart="16dp"
-                app:layout_constraintBottom_toBottomOf="@+id/backButton"
-                app:layout_constraintStart_toEndOf="@+id/backButton"
-                app:layout_constraintTop_toTopOf="@+id/backButton" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/umur"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="16dp"
-            android:layout_marginTop="8dp"
-            android:orientation="vertical"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/appBar">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:text="Umur*"
-                android:textColor="@color/black"
-                android:textSize="16sp" />
-
-            <EditText
-                android:id="@+id/etUmur"
+            <LinearLayout
+                android:id="@+id/appBar"
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:background="@drawable/custom_textfield"
-                android:ems="10"
-                android:hint="Masukkan umur Anda"
-                android:imeOptions="actionNext"
-                android:inputType="text"
-                android:nextFocusForward="@id/email"
-                android:paddingStart="16dp" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/jeniskelamin"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginTop="16dp"
-            android:layout_marginHorizontal="16dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/umur"
-            >
-
-            <TextView
-                android:layout_width="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center|start"
                 android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:textSize="16sp"
-                android:layout_marginBottom="8dp"
-                android:text="Jenis Kelamin*"/>
+                android:background="@color/neutral_10"
+                android:fitsSystemWindows="true"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-            <RadioGroup
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal" >
+                <ImageButton
+                    android:id="@+id/backButton"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:adjustViewBounds="true"
+                    android:background="@color/neutral_10"
+                    android:padding="4dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_back"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                <RadioButton
-                    android:id="@+id/radioMale"
-                    android:layout_width="match_parent"
+                <TextView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="16dp"
-                    android:paddingStart="8dp"
-                    android:text="Laki-laki"
+                    android:text="Pemeriksaan Medis Diabetes"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:layout_marginStart="16dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/backButton"
+                    app:layout_constraintStart_toEndOf="@+id/backButton"
+                    app:layout_constraintTop_toTopOf="@+id/backButton" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/umur"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="8dp"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/appBar">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:text="Umur*"
                     android:textColor="@color/black"
                     android:textSize="16sp" />
 
-                <RadioButton
-                    android:id="@+id/radioFemale"
+                <EditText
+                    android:id="@+id/etUmur"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingStart="8dp"
-                    android:text="Perempuan"
-                    android:textColor="@color/black"
-                    android:textSize="16sp"/>
+                    android:layout_height="48dp"
+                    android:background="@drawable/custom_textfield"
+                    android:ems="10"
+                    android:hint="Masukkan umur Anda"
+                    android:imeOptions="actionNext"
+                    android:inputType="number"
+                    android:nextFocusForward="@id/email"
+                    android:paddingStart="16dp" />
 
-            </RadioGroup>
+            </LinearLayout>
 
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/nyeriDada"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginTop="16dp"
-            android:layout_marginHorizontal="16dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/jeniskelamin"
-            >
-
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/jeniskelamin"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:textSize="16sp"
-                android:layout_marginBottom="8dp"
-                android:text="Pendidikan*"/>
+                android:orientation="vertical"
+                android:layout_marginTop="16dp"
+                android:layout_marginHorizontal="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/umur"
+                >
 
-            <Spinner
-                android:id="@+id/dropdownPendidikan"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:layout_marginBottom="8dp"
+                    android:text="Jenis Kelamin*"/>
+
+                <RadioGroup
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" >
+
+                    <RadioButton
+                        android:id="@+id/radioMale"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="16dp"
+                        android:paddingStart="8dp"
+                        android:text="Laki-laki"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+
+                    <RadioButton
+                        android:id="@+id/radioFemale"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="8dp"
+                        android:text="Perempuan"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"/>
+
+                </RadioGroup>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/nyeriDada"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="16dp"
+                android:layout_marginHorizontal="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/jeniskelamin"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:layout_marginBottom="8dp"
+                    android:text="Pendidikan*"/>
+
+                <Spinner
+                    android:id="@+id/dropdownPendidikan"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:entries="@array/pendidikan_spinner"
+                    app:layout_constraintTop_toBottomOf="@+id/jeniskelamin" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/tinggiBadan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="16dp"
+                android:layout_marginHorizontal="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/nyeriDada"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:textColor="@color/black"
+                    android:layout_marginBottom="8dp"
+                    android:text="Tinggi Badan (cm)"/>
+
+                <EditText
+                    android:id="@+id/etTinggiBadan"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:background="@drawable/custom_textfield"
+                    android:ems="10"
+                    android:hint="Masukkan tinggi badan"
+                    android:imeOptions="actionNext"
+                    android:inputType="number"
+                    android:nextFocusForward="@id/email"
+                    android:paddingStart="16dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/beratBadan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="16dp"
+                android:layout_marginHorizontal="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tinggiBadan"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:textColor="@color/black"
+                    android:layout_marginBottom="8dp"
+                    android:text="Berat Badan (kg)"/>
+
+                <EditText
+                    android:id="@+id/etBeratBadan"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:background="@drawable/custom_textfield"
+                    android:ems="10"
+                    android:hint="Masukkan berat badan"
+                    android:imeOptions="actionNext"
+                    android:inputType="number"
+                    android:nextFocusForward="@id/email"
+                    android:paddingStart="16dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/gulaDarah"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="16dp"
+                android:layout_marginHorizontal="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/beratBadan"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:textColor="@color/black"
+                    android:layout_marginBottom="8dp"
+                    android:text="Kesehatan Fisik*"/>
+
+                <EditText
+                    android:id="@+id/etkesehatanFisik"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:background="@drawable/custom_textfield"
+                    android:ems="10"
+                    android:hint="Jumlah hari kesehatan fisik buruk"
+                    android:imeOptions="actionNext"
+                    android:inputType="number"
+                    android:nextFocusForward="@id/email"
+                    android:paddingStart="16dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/detakJantung"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="16dp"
+                android:layout_marginHorizontal="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/gulaDarah"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:textColor="@color/black"
+                    android:layout_marginBottom="8dp"
+                    android:text="Aktivitas Fisik*"/>
+
+                <RadioGroup
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" >
+
+                    <RadioButton
+                        android:id="@+id/aktivitasFisik_radioYa"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="8dp"
+                        android:text="Ya"
+                        android:layout_marginEnd="16dp"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"/>
+
+                    <RadioButton
+                        android:id="@+id/aktivitasFisik_radioTidak"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="8dp"
+                        android:text="Tidak"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"/>
+
+                </RadioGroup>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/darahTinggi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="16dp"
+                android:layout_marginHorizontal="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/detakJantung"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:layout_marginBottom="8dp"
+                    android:text="Tekanan Darah Tinggi*"/>
+
+                <RadioGroup
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" >
+
+                    <RadioButton
+                        android:id="@+id/darahTinggi_radioAda"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="8dp"
+                        android:text="Ada"
+                        android:layout_marginEnd="16dp"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"/>
+
+                    <RadioButton
+                        android:id="@+id/darahTinggi_radioTidakAda"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="8dp"
+                        android:text="Tidak Ada"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"/>
+
+                </RadioGroup>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/kolesterolTinggi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="16dp"
+                android:layout_marginHorizontal="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/darahTinggi"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:layout_marginBottom="8dp"
+                    android:text="Kolesterol Tinggi*"/>
+
+
+                <RadioGroup
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" >
+
+                    <RadioButton
+                        android:id="@+id/kolesterolTinggi_radioAda"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="8dp"
+                        android:text="Ada"
+                        android:layout_marginEnd="16dp"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"/>
+
+                    <RadioButton
+                        android:id="@+id/kolesterolTinggi_radioTidakAda"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="8dp"
+                        android:text="Tidak Ada"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"/>
+
+                </RadioGroup>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/stroke"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="16dp"
+                android:layout_marginHorizontal="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/kolesterolTinggi"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:layout_marginBottom="8dp"
+                    android:text="Pernah Mengalami Stroke*"/>
+
+                <RadioGroup
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" >
+
+                    <RadioButton
+                        android:id="@+id/stroke_radioPernah"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="8dp"
+                        android:text="Pernah"
+                        android:layout_marginEnd="16dp"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"/>
+
+                    <RadioButton
+                        android:id="@+id/stroke_radioTidak"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="8dp"
+                        android:text="Tidak Pernah"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"/>
+
+                </RadioGroup>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/penyakitJantung"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="16dp"
+                android:layout_marginHorizontal="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/sulitJalan"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:layout_marginBottom="8dp"
+                    android:text="Penyakit Jantung atau Serangan Jantung*"/>
+
+                <RadioGroup
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" >
+
+                    <RadioButton
+                        android:id="@+id/penyakitJantung_radioPernah"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="8dp"
+                        android:text="Pernah"
+                        android:layout_marginEnd="16dp"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"/>
+
+                    <RadioButton
+                        android:id="@+id/penyakitJantung_radioTidak"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="8dp"
+                        android:text="Tidak Pernah"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"/>
+
+                </RadioGroup>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/sulitJalan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="16dp"
+                android:layout_marginHorizontal="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/stroke"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:layout_marginBottom="8dp"
+                    android:text="Kesulitan Berjalan atau Naik Tangga*"/>
+
+                <RadioGroup
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" >
+
+                    <RadioButton
+                        android:id="@+id/sulitJalan_radioYa"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="8dp"
+                        android:text="Ya"
+                        android:layout_marginEnd="16dp"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"/>
+
+                    <RadioButton
+                        android:id="@+id/sulitJalan_radioTidak"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="8dp"
+                        android:text="Tidak"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"/>
+
+                </RadioGroup>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/nyeriDadaOlahraga"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="16dp"
+                android:layout_marginHorizontal="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/penyakitJantung"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:layout_marginBottom="8dp"
+                    android:text="Kesehatan Umum**"/>
+
+                <Spinner
+                    android:id="@+id/dropdownkesehatanUmum"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:entries="@array/kesehatan_umum_spinner"/>
+
+            </LinearLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/submitButton"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
-                android:entries="@array/pendidikan_spinner"
-                app:layout_constraintTop_toBottomOf="@+id/jeniskelamin" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/tekananDarahIstirahat"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginTop="16dp"
-            android:layout_marginHorizontal="16dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/nyeriDada"
-            >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_marginVertical="24dp"
+                android:layout_marginHorizontal="16dp"
+                android:background="@drawable/custom_button"
+                android:text="Mulai Analisis"
+                android:textColor="@color/white"
                 android:textSize="16sp"
-                android:textColor="@color/black"
-                android:layout_marginBottom="8dp"
-                android:text="Indeks Massa Tubuh (BMI)*"/>
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/nyeriDadaOlahraga" />
 
-            <EditText
-                android:id="@+id/etBmi"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:background="@drawable/custom_textfield"
-                android:ems="10"
-                android:hint="Masukkan indeks massa tubuh"
-                android:imeOptions="actionNext"
-                android:inputType="number"
-                android:nextFocusForward="@id/email"
-                android:paddingStart="16dp" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-        </LinearLayout>
+    </ScrollView>
 
-        <LinearLayout
-            android:id="@+id/gulaDarah"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginTop="16dp"
-            android:layout_marginHorizontal="16dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tekananDarahIstirahat"
-            >
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="16sp"
-                android:textColor="@color/black"
-                android:layout_marginBottom="8dp"
-                android:text="Kesehatan Fisik*"/>
-
-            <EditText
-                android:id="@+id/etkesehatanFisik"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:background="@drawable/custom_textfield"
-                android:ems="10"
-                android:hint="Jumlah hari kesehatan fisik buruk"
-                android:imeOptions="actionNext"
-                android:inputType="number"
-                android:nextFocusForward="@id/email"
-                android:paddingStart="16dp" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/detakJantung"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginTop="16dp"
-            android:layout_marginHorizontal="16dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/gulaDarah"
-            >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="16sp"
-                android:textColor="@color/black"
-                android:layout_marginBottom="8dp"
-                android:text="Aktivitas Fisik*"/>
-
-            <RadioGroup
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal" >
-
-                <RadioButton
-                    android:id="@+id/aktivitasFisik_radioYa"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingStart="8dp"
-                    android:text="Ya"
-                    android:layout_marginEnd="16dp"
-                    android:textColor="@color/black"
-                    android:textSize="16sp"/>
-
-                <RadioButton
-                    android:id="@+id/aktivitasFisik_radioTidak"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingStart="8dp"
-                    android:text="Tidak"
-                    android:textColor="@color/black"
-                    android:textSize="16sp"/>
-
-            </RadioGroup>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/darahTinggi"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginTop="16dp"
-            android:layout_marginHorizontal="16dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/detakJantung"
-            >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:textSize="16sp"
-                android:layout_marginBottom="8dp"
-                android:text="Tekanan Darah Tinggi*"/>
-
-            <RadioGroup
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal" >
-
-                <RadioButton
-                    android:id="@+id/darahTinggi_radioAda"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingStart="8dp"
-                    android:text="Ada"
-                    android:layout_marginEnd="16dp"
-                    android:textColor="@color/black"
-                    android:textSize="16sp"/>
-
-                <RadioButton
-                    android:id="@+id/darahTinggi_radioTidakAda"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingStart="8dp"
-                    android:text="Tidak Ada"
-                    android:textColor="@color/black"
-                    android:textSize="16sp"/>
-
-            </RadioGroup>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/kolesterolTinggi"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginTop="16dp"
-            android:layout_marginHorizontal="16dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/darahTinggi"
-            >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:textSize="16sp"
-                android:layout_marginBottom="8dp"
-                android:text="Kolesterol Tinggi*"/>
-
-
-            <RadioGroup
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal" >
-
-                <RadioButton
-                    android:id="@+id/kolesterolTinggi_radioAda"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingStart="8dp"
-                    android:text="Ada"
-                    android:layout_marginEnd="16dp"
-                    android:textColor="@color/black"
-                    android:textSize="16sp"/>
-
-                <RadioButton
-                    android:id="@+id/kolesterolTinggi_radioTidakAda"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingStart="8dp"
-                    android:text="Tidak Ada"
-                    android:textColor="@color/black"
-                    android:textSize="16sp"/>
-
-            </RadioGroup>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/stroke"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginTop="16dp"
-            android:layout_marginHorizontal="16dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/kolesterolTinggi"
-            >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:textSize="16sp"
-                android:layout_marginBottom="8dp"
-                android:text="Pernah Mengalami Stroke*"/>
-
-            <RadioGroup
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal" >
-
-                <RadioButton
-                    android:id="@+id/stroke_radioPernah"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingStart="8dp"
-                    android:text="Pernah"
-                    android:layout_marginEnd="16dp"
-                    android:textColor="@color/black"
-                    android:textSize="16sp"/>
-
-                <RadioButton
-                    android:id="@+id/stroke_radioTidak"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingStart="8dp"
-                    android:text="Tidak Pernah"
-                    android:textColor="@color/black"
-                    android:textSize="16sp"/>
-
-            </RadioGroup>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/penyakitJantung"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginTop="16dp"
-            android:layout_marginHorizontal="16dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/sulitJalan"
-            >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:textSize="16sp"
-                android:layout_marginBottom="8dp"
-                android:text="Penyakit Jantung atau Serangan Jantung*"/>
-
-            <RadioGroup
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal" >
-
-                <RadioButton
-                    android:id="@+id/penyakitJantung_radioPernah"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingStart="8dp"
-                    android:text="Pernah"
-                    android:layout_marginEnd="16dp"
-                    android:textColor="@color/black"
-                    android:textSize="16sp"/>
-
-                <RadioButton
-                    android:id="@+id/penyakitJantung_radioTidak"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingStart="8dp"
-                    android:text="Tidak Pernah"
-                    android:textColor="@color/black"
-                    android:textSize="16sp"/>
-
-            </RadioGroup>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/sulitJalan"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginTop="16dp"
-            android:layout_marginHorizontal="16dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/stroke"
-            >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:textSize="16sp"
-                android:layout_marginBottom="8dp"
-                android:text="Kesulitan Berjalan atau Naik Tangga*"/>
-
-            <RadioGroup
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal" >
-
-                <RadioButton
-                    android:id="@+id/sulitJalan_radioYa"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingStart="8dp"
-                    android:text="Ya"
-                    android:layout_marginEnd="16dp"
-                    android:textColor="@color/black"
-                    android:textSize="16sp"/>
-
-                <RadioButton
-                    android:id="@+id/sulitJalan_radioTidak"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingStart="8dp"
-                    android:text="Tidak"
-                    android:textColor="@color/black"
-                    android:textSize="16sp"/>
-
-            </RadioGroup>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/nyeriDadaOlahraga"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginTop="16dp"
-            android:layout_marginHorizontal="16dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/penyakitJantung"
-            >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:textSize="16sp"
-                android:layout_marginBottom="8dp"
-                android:text="Kesehatan Umum**"/>
-
-            <Spinner
-                android:id="@+id/dropdownkesehatanUmum"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:entries="@array/kesehatan_umum_spinner"/>
-
-        </LinearLayout>
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/submitButton"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_marginVertical="24dp"
-            android:layout_marginHorizontal="16dp"
-            android:background="@drawable/custom_button"
-            android:text="Mulai Analisis"
-            android:textColor="@color/white"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/nyeriDadaOlahraga" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-</ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>
