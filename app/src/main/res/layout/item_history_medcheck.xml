@@ -67,7 +67,7 @@
                     android:text="Peluang Terprediksi:"/>
 
                 <TextView
-                    android:id="@+id/predict"
+                    android:id="@+id/predictPercentage"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/black"

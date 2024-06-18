@@ -191,7 +191,7 @@
                 android:ems="10"
                 android:hint="Masukkan indeks massa tubuh"
                 android:imeOptions="actionNext"
-                android:inputType="text"
+                android:inputType="number"
                 android:nextFocusForward="@id/email"
                 android:paddingStart="16dp" />
 
@@ -225,7 +225,7 @@
                 android:ems="10"
                 android:hint="Jumlah hari kesehatan fisik buruk"
                 android:imeOptions="actionNext"
-                android:inputType="text"
+                android:inputType="number"
                 android:nextFocusForward="@id/email"
                 android:paddingStart="16dp" />
 

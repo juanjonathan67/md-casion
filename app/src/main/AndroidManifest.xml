@@ -31,7 +31,7 @@
             android:name=".views.form.FormOnboardActivity"
             android:exported="false" />
         <activity
-            android:name=".views.form.jantung.JantugResultActivity"
+            android:name=".views.form.jantung.JantungResultActivity"
             android:exported="false" />
         <activity
             android:name=".views.history.HistoryActivity"

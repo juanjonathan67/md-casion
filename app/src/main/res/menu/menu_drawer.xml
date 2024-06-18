@@ -9,21 +9,12 @@
             android:title="Chat Baru"
             />
         <item
-            android:id="@+id/pemeriksaandiabetes"
-            android:title="Pemeriksaan Diabetes"
+            android:id="@+id/pemeriksaanmedis"
+            android:title="Pemeriksaan Diabetes &amp; Jantung"
             />
         <item
-            android:id="@+id/pemeriksaanjantung"
-            android:title="Pemeriksaan Jantung"
-            />
-        <item
-            android:id="@+id/riwayatchat"
-            android:title="Riwayat Chat"
-            />
-
-        <item
-            android:id="@+id/riwayatpenyakit"
-            android:title="Riwayat Penyakit"
+            android:id="@+id/riwayat"
+            android:title="Riwayat Chat &amp; Penyakit"
             />
         <item
             android:id="@+id/kebijakanprivasi"

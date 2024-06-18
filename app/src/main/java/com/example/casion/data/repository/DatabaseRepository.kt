@@ -3,6 +3,7 @@ package com.example.casion.data.repository
 import com.example.casion.data.remote.request.ChatRequest
 import com.example.casion.data.remote.request.DiseaseRequest
 import com.example.casion.data.remote.response.ChatResponse
+import com.example.casion.data.remote.response.DiseaseResponse
 import com.example.casion.data.remote.response.ErrorResponse
 import com.example.casion.data.remote.response.StoreChatResponse
 import com.example.casion.data.remote.response.StoreDiseaseResponse
@@ -39,6 +40,21 @@ class DatabaseRepository private constructor(
                     return@withContext Result.Success(chatResponse)
                 } else {
                     return@withContext Result.Error(chatResponse.message)
+                }
+            } catch (e : Exception) {
+                return@withContext Result.Error(parseException(e))
+            }
+        }
+    }
+
+    suspend fun getDisease() : Result<DiseaseResponse> {
+        return withContext(Dispatchers.IO) {
+            try {
+                val diseaseResponse = databaseApiService.getDiseases()
+                if (diseaseResponse.success) {
+                    return@withContext Result.Success(diseaseResponse)
+                } else {
+                    return@withContext Result.Error(diseaseResponse.message)
                 }
             } catch (e : Exception) {
                 return@withContext Result.Error(parseException(e))

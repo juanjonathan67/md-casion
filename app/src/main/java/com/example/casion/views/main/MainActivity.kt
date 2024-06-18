@@ -40,11 +40,13 @@ import com.example.casion.util.showToast
 import com.example.casion.viewmodel.AuthViewModel
 import com.example.casion.viewmodel.DatabaseViewModel
 import com.example.casion.viewmodel.PredictViewModel
+import com.example.casion.views.form.FormOnboardActivity
 import com.example.casion.views.form.diabetes.DiabetesActivity
 import com.example.casion.views.form.diabetes.DiabetesResultActivity
 import com.example.casion.views.form.jantung.JantungActivity
 import com.example.casion.views.history.HistoryActivity
 import com.example.casion.views.mapview.MapsActivity
+import com.example.casion.views.setting.SettingActivity
 import com.example.casion.views.signup.SignUpActivity
 import com.google.android.material.button.MaterialButton
 import com.google.firebase.auth.FirebaseAuth
@@ -364,22 +366,24 @@ class MainActivity : AppCompatActivity() {
                     )
                     true
                 }
-                R.id.pemeriksaandiabetes -> {
-                    startActivity(Intent(this, DiabetesActivity::class.java))
+                R.id.pemeriksaanmedis -> {
+                    startActivity(Intent(this, FormOnboardActivity::class.java))
                     true
                 }
-                R.id.pemeriksaanjantung -> {
-                    startActivity(Intent(this, JantungActivity::class.java))
-                    true
-                }
-                R.id.riwayatchat -> {
-                    startActivity(Intent(this, HistoryActivity::class.java))
-                    true
+                R.id.riwayat -> {
+                    if (isLoggedIn) {
+                        startActivity(Intent(this, HistoryActivity::class.java))
+                        true
+                    } else {
+                        showToast(this, "Harap login dahulu")
+                        false
+                    }
                 }
                 R.id.kebijakanprivasi -> {
                     true
                 }
                 R.id.pengaturan -> {
+                    startActivity(Intent(this, SettingActivity::class.java))
                     true
                 }
                 else -> {

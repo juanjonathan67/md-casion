@@ -106,20 +106,20 @@
                 android:layout_marginBottom="8dp"
                 android:text="Jenis Kelamin*"/>
 
-            <LinearLayout
+            <RadioGroup
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal" >
 
                 <RadioButton
                     android:id="@+id/radioMale"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
                     android:paddingStart="8dp"
                     android:text="Laki-laki"
-                    android:layout_marginEnd="16dp"
                     android:textColor="@color/black"
-                    android:textSize="16sp"/>
+                    android:textSize="16sp" />
 
                 <RadioButton
                     android:id="@+id/radioFemale"
@@ -130,7 +130,7 @@
                     android:textColor="@color/black"
                     android:textSize="16sp"/>
 
-            </LinearLayout>
+            </RadioGroup>
 
         </LinearLayout>
 
@@ -158,6 +158,7 @@
                 android:id="@+id/dropdownNyeriDada"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
+                android:entries="@array/nyeri_dada_spinner"
                 app:layout_constraintTop_toBottomOf="@+id/jeniskelamin" />
 
         </LinearLayout>
@@ -190,14 +191,14 @@
                 android:ems="10"
                 android:hint="Masukkan tekanan darah"
                 android:imeOptions="actionNext"
-                android:inputType="text"
+                android:inputType="number"
                 android:nextFocusForward="@id/gulaDarah"
                 android:paddingStart="16dp" />
 
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/gulaDarah"
+            android:id="@+id/kolesterol"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -214,18 +215,18 @@
                 android:textSize="16sp"
                 android:textColor="@color/black"
                 android:layout_marginBottom="8dp"
-                android:text="Gula Darah Puasa (mg/dl)*"/>
+                android:text="Kolesterol (mm/dl)*"/>
 
             <EditText
-                android:id="@+id/etGulaDarah"
+                android:id="@+id/etKolesterol"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:background="@drawable/custom_textfield"
                 android:ems="10"
-                android:hint="Masukkan gula darah saat puasa"
+                android:hint="Masukkan kolesterol"
                 android:imeOptions="actionNext"
-                android:inputType="text"
-                android:nextFocusForward="@id/detakJantung"
+                android:inputType="number"
+                android:nextFocusForward="@id/gulaDarah"
                 android:paddingStart="16dp" />
 
         </LinearLayout>
@@ -234,21 +235,19 @@
             android:id="@+id/detakJantung"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginTop="16dp"
             android:layout_marginHorizontal="16dp"
+            android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/gulaDarah"
-            >
+            app:layout_constraintTop_toBottomOf="@+id/kolesterol">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="16sp"
-                android:textColor="@color/black"
                 android:layout_marginBottom="8dp"
-                android:text="Detak Jantung Maksimum (bpm)*"/>
+                android:text="Detak Jantung Maksimum (bpm)*"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
 
             <EditText
                 android:id="@+id/etDetakJantung"
@@ -258,14 +257,14 @@
                 android:ems="10"
                 android:hint="Masukkan detak jantung maksimum"
                 android:imeOptions="actionNext"
-                android:inputType="text"
+                android:inputType="number"
                 android:nextFocusForward="@id/nyeriDadaOlahraga"
                 android:paddingStart="16dp" />
 
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/nyeriDadaOlahraga"
+            android:id="@+id/gulaDarah"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -279,15 +278,84 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:layout_marginBottom="8dp"
+                android:text="Gula Darah Puasa (mg/dl)*"/>
+
+            <RadioGroup
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <RadioButton
+                    android:id="@+id/gulaDarah_radioYa"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="8dp"
+                    android:text="Normal (≤ 120)"
+                    android:layout_marginEnd="16dp"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"/>
+
+                <RadioButton
+                    android:id="@+id/gulaDarah_radioTidak"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="8dp"
+                    android:text="Tinggi (> 120)"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"/>
+
+            </RadioGroup>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/nyeriDadaOlahraga"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="16dp"
+            android:layout_marginHorizontal="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/gulaDarah"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 android:layout_marginBottom="8dp"
                 android:text="Nyeri Dada Saat Olahraga*"/>
 
-            <Spinner
-                android:id="@+id/dropdownNyeriDadaOlahraga"
-                android:layout_width="match_parent"
-                android:layout_height="48dp" />
+            <RadioGroup
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <RadioButton
+                    android:id="@+id/aktivitasFisik_radioYa"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="8dp"
+                    android:text="Ya"
+                    android:layout_marginEnd="16dp"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"/>
+
+                <RadioButton
+                    android:id="@+id/aktivitasFisik_radioTidak"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="8dp"
+                    android:text="Tidak"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"/>
+
+            </RadioGroup>
 
         </LinearLayout>
 

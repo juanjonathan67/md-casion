@@ -7,17 +7,17 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.casion.data.remote.response.ChatsItem
 import com.example.casion.databinding.ItemHistoryDateBinding
 import com.example.casion.util.Time
-import com.example.casion.views.history.HistoryItem
+import com.example.casion.views.history.ChatHistoryItem
 
 class ChatHistoryParentAdapter(
-    var historyItems: List<HistoryItem>,
+    var chatHistoryItemList: List<ChatHistoryItem>,
     private val onChildClick: (ChatsItem) -> Unit
 ) : RecyclerView.Adapter<ChatHistoryParentAdapter.ParentViewHolder>() {
 
     inner class ParentViewHolder(private val binding: ItemHistoryDateBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(historyItem: HistoryItem) {
-            binding.tvHistoryDate.text = Time.getReadableDateFromDate(historyItem.date)
-            val childAdapter = ChatHistoryChildAdapter(historyItem.chats)
+        fun bind(chatHistoryItem: ChatHistoryItem) {
+            binding.tvHistoryDate.text = Time.getReadableDateFromDate(chatHistoryItem.date)
+            val childAdapter = ChatHistoryChildAdapter(chatHistoryItem.chats)
             binding.rvHistory.apply {
                 layoutManager = LinearLayoutManager(binding.root.context)
                 adapter = childAdapter
@@ -32,13 +32,13 @@ class ChatHistoryParentAdapter(
     }
 
     override fun onBindViewHolder(holder: ParentViewHolder, position: Int) {
-        holder.bind(historyItems[position])
+        holder.bind(chatHistoryItemList[position])
     }
 
-    override fun getItemCount(): Int = historyItems.size
+    override fun getItemCount(): Int = chatHistoryItemList.size
 
-    fun updateHistoryItems(newHistoryItems: List<HistoryItem>) {
-        historyItems = newHistoryItems
+    fun updateHistoryItems(newChatHistoryItems: List<ChatHistoryItem>) {
+        chatHistoryItemList = newChatHistoryItems
         notifyDataSetChanged()
     }
 }

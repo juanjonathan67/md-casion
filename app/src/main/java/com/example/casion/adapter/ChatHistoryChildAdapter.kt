@@ -1,13 +1,11 @@
 package com.example.casion.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.casion.data.remote.response.ChatsItem
 import com.example.casion.databinding.ItemHistoryBinding
 import com.example.casion.util.Time
-import com.example.casion.views.history.HistoryItem
 
 class ChatHistoryChildAdapter(
     private var chatList: List<ChatsItem>
@@ -27,12 +25,16 @@ class ChatHistoryChildAdapter(
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChatViewHolder {
+    override fun onCreateViewHolder(
+        parent: ViewGroup, viewType: Int
+    ): ChatViewHolder {
         val binding = ItemHistoryBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ChatViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: ChatViewHolder, position: Int) {
+    override fun onBindViewHolder(
+        holder: ChatViewHolder, position: Int
+    ) {
         holder.bind(chatList[position])
     }
 

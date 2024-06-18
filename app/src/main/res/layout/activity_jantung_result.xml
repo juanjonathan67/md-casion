@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/neutral_10"
-    tools:context=".views.form.diabetes.DiabetesResultActivity">
+    tools:context=".views.form.jantung.JantungResultActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -35,7 +35,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Diabetes"
+                android:text="Serangan Jantung"
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 android:textStyle="bold" />
@@ -43,10 +43,10 @@
         </LinearLayout>
 
         <ImageView
-            android:id="@+id/gauge"
+            android:id="@+id/gaugeJantung"
             android:layout_width="wrap_content"
             android:layout_height="136dp"
-            android:src="@drawable/gauge_diabetes"
+            android:src="@drawable/gauge_low"
             android:layout_marginTop="32dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -60,19 +60,19 @@
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/gauge">
+            app:layout_constraintTop_toBottomOf="@+id/gaugeJantung">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Terindikasi Sebesar"
+                android:text="Peluang Terprediksi"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 android:layout_marginEnd="8dp"
                 android:textColor="@color/black"/>
 
             <TextView
-                android:id="@+id/persentase_peluang"
+                android:id="@+id/persentase_peluangJantung"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="20%"
@@ -118,7 +118,7 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/description"
+                    android:id="@+id/descriptionJantung"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Quam nisl facilisi convallis pellentesque enim. Ut praesent id amet fames nibh ut. Feugiat sagittis leo etiam sem sed turpis elementum. Et nunc id cursus"
@@ -165,7 +165,7 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/sugesstion"
+                    android:id="@+id/sugesstionJantung"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Quam nisl facilisi convallis pellentesque enim. Ut praesent id amet fames nibh ut. Feugiat sagittis leo etiam sem sed turpis"
@@ -189,7 +189,7 @@
             android:layout_marginBottom="16dp"
             android:textColor="@color/white"
             android:textSize="16sp"
-            app:layout_constraintTop_toBottomOf="@+id/yangharusdilakukan"
+            app:layout_constraintTop_toBottomOf="@id/yangharusdilakukan"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
@@ -205,7 +205,7 @@
             android:textColor="@color/primary"
             android:textSize="16sp"
             app:backgroundTint="@color/white"
-            app:layout_constraintTop_toBottomOf="@id/PuskesmasButton"
+            app:layout_constraintTop_toBottomOf="@+id/PuskesmasButton"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

@@ -42,3 +42,5 @@ fun parseException(e: Exception) : String {
 fun CharSequence?.isValidEmail() = !isNullOrEmpty() && Patterns.EMAIL_ADDRESS.matcher(this).matches()
 
 fun CharSequence?.isValidPassword() = !isNullOrEmpty() && PASSWORD.matcher(this).matches()
+
+fun String.capitalizeWords(): String = split(" ").map { it.replaceFirstChar { it2 -> it2.uppercaseChar() } }.joinToString(" ")

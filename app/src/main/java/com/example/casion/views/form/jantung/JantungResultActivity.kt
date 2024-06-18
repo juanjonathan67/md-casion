@@ -1,23 +1,21 @@
-package com.example.casion.views.form.diabetes
+package com.example.casion.views.form.jantung
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.casion.R
 import com.example.casion.data.remote.response.Data
-import com.example.casion.databinding.ActivityDiabetesResultBinding
+import com.example.casion.databinding.ActivityJantungResultBinding
 import com.example.casion.util.showToast
 import com.example.casion.views.main.MainActivity
 import com.example.casion.views.mapview.MapsActivity
-import java.util.Locale
 
-class DiabetesResultActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityDiabetesResultBinding
+class JantungResultActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityJantungResultBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityDiabetesResultBinding.inflate(layoutInflater)
+        binding = ActivityJantungResultBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         val data: Data? = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
@@ -34,25 +32,21 @@ class DiabetesResultActivity : AppCompatActivity() {
     }
 
     private fun setResult(data: Data) {
-        val diabetesType = Integer.parseInt(data.result)
-        when (diabetesType) {
-            0 -> {
-                binding.gauge.setImageResource(R.drawable.gauge_normal)
+        when (data.result) {
+            "low chance" -> {
+                binding.gaugeJantung.setImageResource(R.drawable.gauge_low)
             }
-            1 -> {
-                binding.gauge.setImageResource(R.drawable.gauge_prediabetes)
-            }
-            2 -> {
-                binding.gauge.setImageResource(R.drawable.gauge_diabetes)
+            "high chance" -> {
+                binding.gaugeJantung.setImageResource(R.drawable.gauge_high)
             }
             else -> {
                 showToast(this, "Hasil prediksi tidak valid")
             }
         }
 
-        binding.persentasePeluang.text = String.format(Locale.getDefault(), "%.2f%%", data.confidenceScore.toDouble())
-        binding.description.text = data.description
-        binding.sugesstion.text = data.suggestion
+        binding.persentasePeluangJantung.text = data.confidenceScore
+        binding.descriptionJantung.text = data.description
+        binding.sugesstionJantung.text = data.suggestion
     }
 
     private fun clickEvents() {

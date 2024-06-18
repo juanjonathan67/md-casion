@@ -6,6 +6,7 @@ import java.time.LocalDateTime
 import java.time.LocalTime
 import java.time.Period
 import java.time.ZoneId
+import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 import java.util.Locale
 
@@ -24,15 +25,23 @@ object Time {
 
     fun localDateParser(date: String): LocalDate = LocalDate.parse(date)
 
+    fun zonedDateTimeParser(zonedDateTime: String): ZonedDateTime = ZonedDateTime.ofInstant(Instant.parse(zonedDateTime), ZoneId.of("UTC"))
+
     fun getCurrentTime(): String = LocalTime.now().format(timeFormatter)
 
     fun getCurrentDateTime(): String = LocalDateTime.now().format(dateTimeFormatter)
 
     fun getDateFromDateTime(dateTime: String) : String = localDateTimeParser(dateTime).toLocalDate().format(dateFormatter)
 
+    fun getDateFromZonedDateTime(zonedDateTime: String) : String = zonedDateTimeParser(zonedDateTime).format(dateFormatter)
+
     fun getReadableDateFromDate(date: String) : String = localDateParser(date).format(dateReadableFormatter)
 
     fun getTimeFromDateTime(dateTime: String) : String = localDateTimeParser(dateTime).format(timeFormatter)
+
+    fun getTimeFromZonedDateTime(zonedDateTime: String) : String = zonedDateTimeParser(zonedDateTime).format(timeFormatter)
+
+    fun getDateTimeFromZonedDateTime(zonedDateTime: String) : String = zonedDateTimeParser(zonedDateTime).format(dateTimeFormatter)
 
     fun isTomorrowOrAfter(localDateTime: LocalDateTime) : Boolean = localDateTime.dayOfMonth < LocalDateTime.now().dayOfMonth
 

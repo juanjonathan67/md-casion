@@ -30,8 +30,6 @@ class DiabetesActivity : AppCompatActivity() {
     private lateinit var prefs: UserPreferences
     private lateinit var firebaseAuth: FirebaseAuth
     private var isLoggedIn = false
-    private var isChatSaved = false
-    private var currentChatId = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

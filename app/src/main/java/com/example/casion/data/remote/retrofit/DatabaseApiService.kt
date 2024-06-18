@@ -3,6 +3,7 @@ package com.example.casion.data.remote.retrofit
 import com.example.casion.data.remote.request.ChatRequest
 import com.example.casion.data.remote.request.DiseaseRequest
 import com.example.casion.data.remote.response.ChatResponse
+import com.example.casion.data.remote.response.DiseaseResponse
 import com.example.casion.data.remote.response.ErrorResponse
 import com.example.casion.data.remote.response.StoreChatResponse
 import com.example.casion.data.remote.response.StoreDiseaseResponse
@@ -21,8 +22,8 @@ interface DatabaseApiService {
     @GET("chat/")
     suspend fun getChat() : ChatResponse
 
-//    @GET("disease/")
-//    suspend fun getDiseases() :
+    @GET("disease/")
+    suspend fun getDiseases() : DiseaseResponse
 
     @POST("chat/")
     suspend fun storeChat(@Body chatRequest: ChatRequest) : StoreChatResponse
