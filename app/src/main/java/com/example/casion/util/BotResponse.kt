@@ -123,7 +123,7 @@ object BotResponse {
 
     fun responses(_message: String, pickedSymptoms: ArrayList<String>): String {
         val random = (0..2).random()
-        val message = _message.toLowerCase()
+        val message = _message.lowercase()
 
         return when {
             message.contains("halo") || message.contains("hai") -> {
@@ -136,7 +136,7 @@ object BotResponse {
 
             else -> {
                 // Create response message including the list of picked symptoms as bullet points
-                if (pickedSymptoms.isNotEmpty()) {
+                if (pickedSymptoms.size > 0) {
                     val symptomsList = pickedSymptoms.joinToString("\n") { "• $it" }
                     "Gejala yang sudah kamu sebutkan:\n$symptomsList"
                 } else {

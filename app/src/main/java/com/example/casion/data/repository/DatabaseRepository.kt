@@ -1,16 +1,18 @@
 package com.example.casion.data.repository
 
 import com.example.casion.data.remote.request.ChatRequest
+import com.example.casion.data.remote.request.DiseaseRequest
 import com.example.casion.data.remote.response.ChatResponse
+import com.example.casion.data.remote.response.DiseaseResponse
 import com.example.casion.data.remote.response.ErrorResponse
 import com.example.casion.data.remote.response.StoreChatResponse
+import com.example.casion.data.remote.response.StoreDiseaseResponse
 import com.example.casion.data.remote.response.UserDetailsResponse
 import com.example.casion.data.remote.retrofit.DatabaseApiService
 import com.example.casion.data.result.Result
-import com.example.casion.util.parseError
+import com.example.casion.util.parseException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import retrofit2.HttpException
 
 class DatabaseRepository private constructor(
     private val databaseApiService: DatabaseApiService
@@ -24,8 +26,8 @@ class DatabaseRepository private constructor(
                 } else {
                     return@withContext Result.Error(userDetailsResponse.message)
                 }
-            } catch (e : HttpException) {
-                return@withContext Result.Error(parseError(e))
+            } catch (e : Exception) {
+                return@withContext Result.Error(parseException(e))
             }
         }
     }
@@ -39,8 +41,23 @@ class DatabaseRepository private constructor(
                 } else {
                     return@withContext Result.Error(chatResponse.message)
                 }
-            } catch (e : HttpException) {
-                return@withContext Result.Error(parseError(e))
+            } catch (e : Exception) {
+                return@withContext Result.Error(parseException(e))
+            }
+        }
+    }
+
+    suspend fun getDisease() : Result<DiseaseResponse> {
+        return withContext(Dispatchers.IO) {
+            try {
+                val diseaseResponse = databaseApiService.getDiseases()
+                if (diseaseResponse.success) {
+                    return@withContext Result.Success(diseaseResponse)
+                } else {
+                    return@withContext Result.Error(diseaseResponse.message)
+                }
+            } catch (e : Exception) {
+                return@withContext Result.Error(parseException(e))
             }
         }
     }
@@ -56,8 +73,25 @@ class DatabaseRepository private constructor(
                 } else {
                     return@withContext Result.Error(storeChatResponse.message)
                 }
-            } catch (e : HttpException) {
-                return@withContext Result.Error(parseError(e))
+            } catch (e : Exception) {
+                return@withContext Result.Error(parseException(e))
+            }
+        }
+    }
+
+    suspend fun storeDisease(
+        diseaseRequest: DiseaseRequest
+    ) : Result<StoreDiseaseResponse> {
+        return withContext(Dispatchers.IO) {
+            try {
+                val storeDiseaseResponse = databaseApiService.storeDisease(diseaseRequest)
+                if (storeDiseaseResponse.success) {
+                    return@withContext Result.Success(storeDiseaseResponse)
+                } else {
+                    return@withContext Result.Error(storeDiseaseResponse.message)
+                }
+            } catch (e : Exception) {
+                return@withContext Result.Error(parseException(e))
             }
         }
     }
@@ -74,8 +108,8 @@ class DatabaseRepository private constructor(
                 } else {
                     return@withContext Result.Error(updateChatResponse.message)
                 }
-            } catch (e : HttpException) {
-                return@withContext Result.Error(parseError(e))
+            } catch (e : Exception) {
+                return@withContext Result.Error(parseException(e))
             }
         }
     }
@@ -91,8 +125,8 @@ class DatabaseRepository private constructor(
                 } else {
                     return@withContext Result.Error(deleteChatResponse.message)
                 }
-            } catch (e : HttpException) {
-                return@withContext Result.Error(parseError(e))
+            } catch (e : Exception) {
+                return@withContext Result.Error(parseException(e))
             }
         }
     }

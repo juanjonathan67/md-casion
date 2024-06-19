@@ -21,7 +21,10 @@ import com.example.casion.adapter.QuickChatAdapter
 import com.example.casion.data.MessageData
 import com.example.casion.data.QuickChatData
 import com.example.casion.data.remote.request.ChatRequest
+import com.example.casion.data.remote.request.DiseaseRequest
 import com.example.casion.data.remote.request.MessagesItem
+import com.example.casion.data.remote.response.ChatsItem
+import com.example.casion.data.remote.response.Data
 import com.example.casion.data.result.Result
 import com.example.casion.databinding.ActivityMainBinding
 import com.example.casion.databinding.DrawerHeaderBinding
@@ -37,7 +40,13 @@ import com.example.casion.util.showToast
 import com.example.casion.viewmodel.AuthViewModel
 import com.example.casion.viewmodel.DatabaseViewModel
 import com.example.casion.viewmodel.PredictViewModel
+import com.example.casion.views.form.FormOnboardActivity
 import com.example.casion.views.form.diabetes.DiabetesActivity
+import com.example.casion.views.form.diabetes.DiabetesResultActivity
+import com.example.casion.views.form.jantung.JantungActivity
+import com.example.casion.views.history.HistoryActivity
+import com.example.casion.views.mapview.MapsActivity
+import com.example.casion.views.setting.SettingActivity
 import com.example.casion.views.signup.SignUpActivity
 import com.google.android.material.button.MaterialButton
 import com.google.firebase.auth.FirebaseAuth
@@ -67,7 +76,10 @@ class MainActivity : AppCompatActivity() {
     private var currentChatId = ""
 
     //prediction helper variable
+    private val originalSymptoms = ArrayList<String>()
     private val pickedSymptoms = ArrayList<String>()
+    private var currentPrediction = "No Prediction"
+    private var currentMessage = ""
 
     //QuickChat Dummy Data
     private fun addDataToList() {
@@ -86,20 +98,18 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         installSplashScreen()
 
+        botPredictResponse("Halo 👋, saya Casion akan membantu anda mengidentifikasi penyakitmu, silahkan ketik gejalamu atau bisa dicari melalui quick chat agar Casion bisa memulai proses diagnosis.")
+
+        isChatSaved = false
+
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        sessionManager()
-
-        binding.quickchat.visibility = View.GONE
 
         binding.recyclerView.setHasFixedSize(true)
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
         addDataToList()
 
         quickChatAdapter = QuickChatAdapter(mList, contentTextSize = 16f) { selectedText ->
-            pickedSymptoms.add(selectedText)
-
             val currentText = binding.etMessage.text.toString()
             binding.etMessage.setText(
                 if (currentText.isEmpty()) "$selectedText," else "$currentText $selectedText,"
@@ -115,9 +125,15 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
+        binding.quickchat.visibility = View.GONE
+
         recyclerView()
 
+        navigationDrawer()
+
         clickEvents()
+
+        sessionManager()
     }
 
     private fun toggleRecyclerViewVisibility() {
@@ -134,7 +150,9 @@ class MainActivity : AppCompatActivity() {
         val headerBinding = DrawerHeaderBinding.bind(binding.navView.getHeaderView(0))
 
         binding.sendButton.setOnClickListener {
-            if(pickedSymptoms.size >= 3) {
+            currentMessage = binding.etMessage.text.toString()
+            if (currentMessage.isNotEmpty()) {
+                sendMessage()
                 val allMaps = listOf(
                     BotResponse.skinAndNailsSymptoms,
                     BotResponse.respiratorySymptoms,
@@ -146,42 +164,64 @@ class MainActivity : AppCompatActivity() {
                     BotResponse.endocrineSymptoms
                 )
 
-                // Create an ArrayList to store original symptoms
-                val originalSymptoms = ArrayList<String>()
-
-                // Iterate over pickedSymptoms and add corresponding original symptoms
-                pickedSymptoms.forEach { pickedSymptom ->
-                    allMaps.forEach { map ->
-                        getKeyFromValue(map, pickedSymptom)?.let { originalSymptoms.add(it) }
+                // Iterate over allMaps and scan the currentMessage for any keys
+                allMaps.forEach { map ->
+                    map.forEach { (key, value) ->
+                        if (currentMessage.contains(value.lowercase(), ignoreCase = true)) {
+                            originalSymptoms.add(key)
+                            pickedSymptoms.add(value)
+                        }
                     }
                 }
 
-//                 Assuming predictViewModel.predict expects a list of original symptoms
-                predictViewModel.predict("general", originalSymptoms).observe(this) { result ->
-                    when (result) {
-                        is Result.Error -> { botPredictResponse("Terjadi error saat mendiagnosa penyakitmu.") }
-                        Result.Loading -> {}
-                        is Result.Success -> {
-                            botPredictResponse("Kamu terprediksi memiliki penyakit ${result.data.data.result} dengan tingkat keyakinan ${result.data.data.confidenceScore}")
-                            botPredictResponse(result.data.data.description)
-                            botPredictResponse(result.data.data.suggestion)
+                if (originalSymptoms.size >= 3) {
+                    if (originalSymptoms.size > 5) {
+                        botPredictResponse("Gejala yang dipilih maksimal 5. Sehingga, kami akan mendiagnosa penyakit anda berdasarkan 5 gejala pertama.")
+                        originalSymptoms.subList(5, originalSymptoms.size).clear()
+                        pickedSymptoms.subList(5, pickedSymptoms.size).clear()
+                    }
+                    // Assuming predictViewModel.predict expects a list of original symptoms
+                    predictViewModel.predict("general", originalSymptoms).observe(this) { result ->
+                        when (result) {
+                            is Result.Error -> { botPredictResponse("Terjadi error saat mendiagnosa penyakitmu.") }
+                            Result.Loading -> { botPredictResponse("Penyakitmu sedang didiagnosa, mohon ditunggu hasilnya...") }
+                            is Result.Success -> {
+                                val prediction = result.data.data
+                                currentPrediction = prediction.result
+                                botPredictResponse("Kamu terprediksi memiliki penyakit ${prediction.result} dengan tingkat keyakinan ${prediction.confidenceScore}")
+                                botPredictResponse(prediction.description)
+                                botPredictResponse(prediction.suggestion)
+                                if (isLoggedIn) {
+                                    databaseViewModel.storeDisease(DiseaseRequest(
+                                        "general",
+                                        prediction.result,
+                                        prediction.description,
+                                        prediction.suggestion,
+                                        prediction.confidenceScore,
+                                        prediction.createdAt
+                                    ))
+                                }
+                            }
                         }
                     }
                 }
             }
-            sendMessage()
         }
 
-        binding.etMessage.setOnClickListener {
-            lifecycleScope.launch {
-                delay(100)
-
+        binding.etMessage.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
                 binding.quickchat.visibility = View.VISIBLE
 
-                withContext(Dispatchers.Main) {
-                    binding.chatRecyclerView.scrollToPosition(messageAdapter.itemCount - 1)
+                lifecycleScope.launch {
+                    delay(100)
 
+                    withContext(Dispatchers.Main) {
+                        binding.chatRecyclerView.scrollToPosition(messageAdapter.itemCount - 1)
+
+                    }
                 }
+            } else {
+                binding.quickchat.visibility = View.GONE
             }
         }
 
@@ -190,7 +230,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.SignUpbutton.setOnClickListener {
-            val intent = Intent(this, DiabetesActivity::class.java)
+            val intent = Intent(this, SignUpActivity::class.java)
             startActivity(intent)
         }
 
@@ -204,12 +244,9 @@ class MainActivity : AppCompatActivity() {
             toggleRecyclerViewVisibility()
         }
 
-    }
-
-    private fun recyclerView() {
-        messageAdapter = MessageAdapter()
-        binding.chatRecyclerView.adapter = messageAdapter
-        binding.chatRecyclerView.layoutManager = LinearLayoutManager(applicationContext)
+        binding.mapView.setOnClickListener {
+            startActivity(Intent(this@MainActivity, MapsActivity::class.java))
+        }
     }
 
     private fun sessionManager() {
@@ -217,6 +254,7 @@ class MainActivity : AppCompatActivity() {
         val googleUser = firebaseAuth.currentUser
         val headerBinding = DrawerHeaderBinding.bind(binding.navView.getHeaderView(0))
         prefs = UserPreferences.getInstance(this.datastore)
+
         if (googleUser != null) {
             Glide.with(this)
                 .load(googleUser.photoUrl)
@@ -241,6 +279,28 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
             }
+        }
+
+        val chatHistoryItem: ChatsItem? = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            intent.getParcelableExtra(CHAT_HISTORY_ITEM, ChatsItem::class.java)
+        } else {
+            intent.getParcelableExtra(CHAT_HISTORY_ITEM)
+        }
+
+        if (chatHistoryItem != null) {
+            val messageItems = ArrayList<MessageData>()
+            for (message in chatHistoryItem.messages) {
+                val newMessage = MessageData(
+                    message.message,
+                    if (message.bot) RECEIVE_ID else SEND_ID,
+                    message.time
+                )
+                messageItems.add(newMessage)
+                messageAdapter.insertMessage(newMessage)
+            }
+            messageList = messageItems
+            currentChatId = chatHistoryItem.chatId
+            isChatSaved = true
         }
     }
 
@@ -297,9 +357,54 @@ class MainActivity : AppCompatActivity() {
 
         return ChatRequest(
             dateTime = Time.getCurrentDateTime(),
-            title = messageList.last().message,
+            title = currentPrediction,
             messages = messagesItemList
         )
+    }
+
+    private fun recyclerView() {
+        messageAdapter = MessageAdapter()
+        binding.chatRecyclerView.adapter = messageAdapter
+        binding.chatRecyclerView.layoutManager = LinearLayoutManager(applicationContext)
+    }
+
+    private fun navigationDrawer() {
+        binding.navView.setNavigationItemSelectedListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.chatbaru -> {
+                    finish()
+                    startActivity(Intent(this, MainActivity::class.java)
+                        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                        .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                    )
+                    true
+                }
+                R.id.pemeriksaanmedis -> {
+                    startActivity(Intent(this, FormOnboardActivity::class.java))
+                    true
+                }
+                R.id.riwayat -> {
+                    if (isLoggedIn) {
+                        startActivity(Intent(this, HistoryActivity::class.java))
+                        true
+                    } else {
+                        showToast(this, "Harap login dahulu")
+                        false
+                    }
+                }
+                R.id.kebijakanprivasi -> {
+                    true
+                }
+                R.id.pengaturan -> {
+                    startActivity(Intent(this, SettingActivity::class.java))
+                    true
+                }
+                else -> {
+                    false
+                }
+            }
+        }
     }
 
     private fun sendMessage() {
@@ -316,8 +421,6 @@ class MainActivity : AppCompatActivity() {
             binding.imageView.visibility = View.GONE
 
             botResponse(message)
-
-            binding.quickchat.visibility = View.GONE
         }
     }
 
@@ -355,7 +458,12 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    // Function to get the key from value
     private fun getKeyFromValue(map: Map<String, String>, value: String): String? {
         return map.entries.firstOrNull { it.value == value }?.key
+    }
+
+    companion object {
+        const val CHAT_HISTORY_ITEM = "chat_history_item"
     }
 }

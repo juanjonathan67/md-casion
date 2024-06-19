@@ -17,4 +17,12 @@ class PredictViewModel (private val predictRepository: PredictRepository?) : Vie
         }
         return result
     }
+
+    fun predict (category: String, text: String) : LiveData<Result<PredictResponse>> {
+        val result: MutableLiveData<Result<PredictResponse>> = MutableLiveData(Result.Loading)
+        viewModelScope.launch {
+            result.value = predictRepository?.predict(category, text)
+        }
+        return result
+    }
 }

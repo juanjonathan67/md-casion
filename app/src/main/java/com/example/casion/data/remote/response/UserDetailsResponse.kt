@@ -17,17 +17,17 @@ data class UserDetailsResponse(
 data class UserDetails(
 
 	@field:SerializedName("birthday")
-	val birthday: String,
+	val birthday: String?,
 
 	@field:SerializedName("gender")
-	val gender: String,
+	val gender: String?,
 
 	@field:SerializedName("fullName")
-	val fullName: String,
+	val fullName: String?,
 
 	@field:SerializedName("userId")
-	val userId: String,
+	val userId: String?,
 
 	@field:SerializedName("email")
-	val email: String
+	val email: String?
 )
