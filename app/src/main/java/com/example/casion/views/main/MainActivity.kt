@@ -174,8 +174,6 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
 
-                Log.d("Symptoms", originalSymptoms.toString())
-
                 if (originalSymptoms.size >= 3) {
                     if (originalSymptoms.size > 5) {
                         botPredictResponse("Gejala yang dipilih maksimal 5. Sehingga, kami akan mendiagnosa penyakit anda berdasarkan 5 gejala pertama.")
